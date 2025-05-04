@@ -32,7 +32,7 @@
             tbName = new TextBox();
             lbDescription = new Label();
             tbDescription = new TextBox();
-            btnSubmitIdea = new Button();
+            btnSubmitProject = new Button();
             cbPrivate = new CheckBox();
             cmbPriority = new ComboBox();
             lbPriority = new Label();
@@ -78,14 +78,15 @@
             tbDescription.Size = new Size(452, 108);
             tbDescription.TabIndex = 7;
             // 
-            // btnSubmitIdea
+            // btnSubmitProject
             // 
-            btnSubmitIdea.Location = new Point(757, 372);
-            btnSubmitIdea.Name = "btnSubmitIdea";
-            btnSubmitIdea.Size = new Size(75, 23);
-            btnSubmitIdea.TabIndex = 8;
-            btnSubmitIdea.Text = "SUBMIT";
-            btnSubmitIdea.UseVisualStyleBackColor = true;
+            btnSubmitProject.Location = new Point(757, 372);
+            btnSubmitProject.Name = "btnSubmitProject";
+            btnSubmitProject.Size = new Size(75, 23);
+            btnSubmitProject.TabIndex = 8;
+            btnSubmitProject.Text = "SUBMIT";
+            btnSubmitProject.UseVisualStyleBackColor = true;
+            btnSubmitProject.Click += btnSubmitProject_Click;
             // 
             // cbPrivate
             // 
@@ -181,7 +182,7 @@
             Controls.Add(lbPriority);
             Controls.Add(cmbPriority);
             Controls.Add(cbPrivate);
-            Controls.Add(btnSubmitIdea);
+            Controls.Add(btnSubmitProject);
             Controls.Add(tbDescription);
             Controls.Add(lbDescription);
             Controls.Add(tbName);
@@ -189,6 +190,7 @@
             Margin = new Padding(2);
             Name = "AddProjectForm";
             Text = "AddProjectForm";
+            Load += AddProjectForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -198,7 +200,7 @@
         private TextBox tbName;
         private Label lbDescription;
         private TextBox tbDescription;
-        private Button btnSubmitIdea;
+        private Button btnSubmitProject;
         private CheckBox cbPrivate;
         private ComboBox cmbPriority;
         private Label lbPriority;

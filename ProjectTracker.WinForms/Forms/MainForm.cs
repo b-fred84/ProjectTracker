@@ -1,15 +1,22 @@
+using Microsoft.Extensions.DependencyInjection;
+
 namespace ProjectTracker.WinForms
 {
     public partial class MainForm : Form
     {
-        public MainForm()
+
+
+        private readonly IServiceProvider _serviceProvider;
+        public MainForm(IServiceProvider serviceProvider)
         {
             InitializeComponent();
+            _serviceProvider = serviceProvider;
         }
 
         private void btnAddProject_Click(object sender, EventArgs e)
         {
-            AddProjectForm addProjectForm = new AddProjectForm();
+            AddProjectForm addProjectForm = _serviceProvider.GetRequiredService<AddProjectForm>();
+            addProjectForm.ClearProjectForm();
             addProjectForm.ShowDialog();
         }
 
