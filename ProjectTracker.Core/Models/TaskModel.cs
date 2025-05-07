@@ -11,11 +11,11 @@ namespace ProjectTracker.Core.Models
         public int Id { get; set; }
         public int ProjectId {  get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Details { get; set; }
         public int StatusId { get; set; }
         public int PriorityId { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime FinishDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? FinishDate { get; set; }
         public bool Private { get; set; }
     }
 }

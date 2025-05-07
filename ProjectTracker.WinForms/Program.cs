@@ -5,6 +5,7 @@ using ProjectTracker.Core.Interfaces;
 using ProjectTracker.DataAccess.Repositories;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using ProjectTracker.WinForms.Forms;
 
 namespace ProjectTracker.WinForms
 {
@@ -39,8 +40,11 @@ namespace ProjectTracker.WinForms
                     .AddScoped<IDbConnection>(_ => new SqlConnection(connectionString))
                     .AddScoped<IProjectRepository, ProjectRepository>()
                     .AddScoped<ITaskRepository, TaskRepository>()
+                    .AddScoped<IProjectIdeaRepository, ProjectIdeaRepository>()
                     .AddScoped<AddProjectForm>()
                     .AddScoped<AddTaskForm>()
+                    .AddScoped<AddProjectIdeaForm>()
+                    .AddScoped<ViewForm>()
                     .AddScoped<MainForm>()
                     .BuildServiceProvider();
 

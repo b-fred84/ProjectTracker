@@ -31,6 +31,7 @@
             btnAddProject = new Button();
             btnAddTask = new Button();
             btnAddIdea = new Button();
+            btnView = new Button();
             SuspendLayout();
             // 
             // btnAddProject
@@ -66,11 +67,23 @@
             btnAddIdea.UseVisualStyleBackColor = true;
             btnAddIdea.Click += btnAddIdea_Click;
             // 
+            // btnView
+            // 
+            btnView.Location = new Point(124, 247);
+            btnView.Margin = new Padding(2);
+            btnView.Name = "btnView";
+            btnView.Size = new Size(160, 58);
+            btnView.TabIndex = 3;
+            btnView.Text = "View";
+            btnView.UseVisualStyleBackColor = true;
+            btnView.Click += btnView_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(868, 424);
+            Controls.Add(btnView);
             Controls.Add(btnAddIdea);
             Controls.Add(btnAddTask);
             Controls.Add(btnAddProject);
@@ -85,5 +98,6 @@
         private Button btnAddProject;
         private Button btnAddTask;
         private Button btnAddIdea;
+        private Button btnView;
     }
 }

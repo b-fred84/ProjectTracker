@@ -37,8 +37,8 @@
             lbPriority = new Label();
             cmbPriority = new ComboBox();
             cbPrivate = new CheckBox();
-            btnSubmitIdea = new Button();
-            tbDescription = new TextBox();
+            btnSubmitTask = new Button();
+            tbDetails = new TextBox();
             lbDetails = new Label();
             tbName = new TextBox();
             lbName = new Label();
@@ -126,23 +126,24 @@
             cbPrivate.Text = "Private";
             cbPrivate.UseVisualStyleBackColor = true;
             // 
-            // btnSubmitIdea
+            // btnSubmitTask
             // 
-            btnSubmitIdea.Location = new Point(764, 365);
-            btnSubmitIdea.Name = "btnSubmitIdea";
-            btnSubmitIdea.Size = new Size(75, 23);
-            btnSubmitIdea.TabIndex = 22;
-            btnSubmitIdea.Text = "SUBMIT";
-            btnSubmitIdea.UseVisualStyleBackColor = true;
+            btnSubmitTask.Location = new Point(764, 365);
+            btnSubmitTask.Name = "btnSubmitTask";
+            btnSubmitTask.Size = new Size(75, 23);
+            btnSubmitTask.TabIndex = 22;
+            btnSubmitTask.Text = "SUBMIT";
+            btnSubmitTask.UseVisualStyleBackColor = true;
+            btnSubmitTask.Click += btnSubmitTask_Click;
             // 
-            // tbDescription
+            // tbDetails
             // 
-            tbDescription.Location = new Point(103, 143);
-            tbDescription.Multiline = true;
-            tbDescription.Name = "tbDescription";
-            tbDescription.ScrollBars = ScrollBars.Vertical;
-            tbDescription.Size = new Size(452, 108);
-            tbDescription.TabIndex = 21;
+            tbDetails.Location = new Point(103, 143);
+            tbDetails.Multiline = true;
+            tbDetails.Name = "tbDetails";
+            tbDetails.ScrollBars = ScrollBars.Vertical;
+            tbDetails.Size = new Size(452, 108);
+            tbDetails.TabIndex = 21;
             // 
             // lbDetails
             // 
@@ -203,14 +204,15 @@
             Controls.Add(lbPriority);
             Controls.Add(cmbPriority);
             Controls.Add(cbPrivate);
-            Controls.Add(btnSubmitIdea);
-            Controls.Add(tbDescription);
+            Controls.Add(btnSubmitTask);
+            Controls.Add(tbDetails);
             Controls.Add(lbDetails);
             Controls.Add(tbName);
             Controls.Add(lbName);
             Margin = new Padding(2);
             Name = "AddTaskForm";
             Text = "AddTaskForm";
+            Load += AddTaskForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -226,8 +228,8 @@
         private Label lbPriority;
         private ComboBox cmbPriority;
         private CheckBox cbPrivate;
-        private Button btnSubmitIdea;
-        private TextBox tbDescription;
+        private Button btnSubmitTask;
+        private TextBox tbDetails;
         private Label lbDetails;
         private TextBox tbName;
         private Label lbName;

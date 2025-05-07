@@ -61,9 +61,10 @@ namespace ProjectTracker.WinForms
                 {
                     await _projectRepository.AddAsync(project);
 
-                    MessageBox.Show($"Project: {project.Name} successfully added to the db.");
+                    MessageBox.Show($"Project: {project.Name} successfully added.");
 
-                    ClearProjectForm();
+                    //ClearProjectForm();
+                    this.Close();
                 }
                 else
                 {
@@ -101,8 +102,8 @@ namespace ProjectTracker.WinForms
             cmbPriority.DisplayMember = "Name";
             cmbPriority.ValueMember = "Id";
 
-            var stutusList = await _projectRepository.GetAllStatusAsync();
-            cmbStatus.DataSource = stutusList;
+            var statusList = await _projectRepository.GetAllStatusAsync();
+            cmbStatus.DataSource = statusList;
             cmbStatus.DisplayMember = "Name";
             cmbStatus.ValueMember = "Id";
         }

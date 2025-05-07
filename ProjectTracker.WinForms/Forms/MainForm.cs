@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using ProjectTracker.WinForms.Forms;
 
 namespace ProjectTracker.WinForms
 {
@@ -22,14 +23,22 @@ namespace ProjectTracker.WinForms
 
         private void btnAddTask_Click(object sender, EventArgs e)
         {
-            AddTaskForm addTaskForm = new AddTaskForm();
+            AddTaskForm addTaskForm = _serviceProvider.GetRequiredService<AddTaskForm>();
+            addTaskForm.ClearTaskForm();
             addTaskForm.ShowDialog();
         }
 
         private void btnAddIdea_Click(object sender, EventArgs e)
         {
-            AddProjectIdeaForm addProjectIdeaForm = new AddProjectIdeaForm();
+            AddProjectIdeaForm addProjectIdeaForm = _serviceProvider.GetRequiredService<AddProjectIdeaForm>();
+            addProjectIdeaForm.ClearIdeaForm();
             addProjectIdeaForm.ShowDialog();
+        }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            ViewForm viewForm = _serviceProvider.GetRequiredService<ViewForm>();
+            viewForm.ShowDialog();
         }
     }
 }

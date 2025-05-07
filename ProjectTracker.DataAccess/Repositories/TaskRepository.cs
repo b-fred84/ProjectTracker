@@ -29,9 +29,10 @@ namespace ProjectTracker.DataAccess.Repositories
         }
 
 
-        public Task<IEnumerable<TaskModel>> GetAllTasksAsync()
+        public async Task<IEnumerable<TaskModel>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var sqlQuery = "SELECT * FROM Task";
+            return await _dbConnection.QueryAsync<TaskModel>(sqlQuery);
         }
 
         public Task<TaskModel> GetTaskById(int Id)
@@ -40,17 +41,25 @@ namespace ProjectTracker.DataAccess.Repositories
         }
 
 
-        public Task<IEnumerable<Priority>> GetAllPriorityAsync()
+        public async Task<IEnumerable<Priority>> GetAllPriorityAsync()
         {
-            throw new NotImplementedException();
+            var sqlQuery = "SELECT * FROM Priority";
+            return await _dbConnection.QueryAsync<Priority>(sqlQuery);
         }
 
-        public Task<IEnumerable<Status>> GetAllStatusAsync()
+        public async Task<IEnumerable<Status>> GetAllStatusAsync()
         {
-            throw new NotImplementedException();
+            var sqlQuery = "SELECT * FROM Status";
+            return await _dbConnection.QueryAsync<Status>(sqlQuery);
         }
 
-      
+        public async Task<IEnumerable<Project>> GetAllProjectsAsync()
+        {
+            var sqlQuery = "SELECT Id, Name FROM Project";
+            return await _dbConnection.QueryAsync<Project>(sqlQuery);
+        }
+
+
         public Task UpdateAsync(TaskModel taskk)
         {
             throw new NotImplementedException();
@@ -61,5 +70,6 @@ namespace ProjectTracker.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
+        
     }
 }

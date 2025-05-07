@@ -61,6 +61,7 @@
             btnSubmitIdea.TabIndex = 2;
             btnSubmitIdea.Text = "SUBMIT";
             btnSubmitIdea.UseVisualStyleBackColor = true;
+            btnSubmitIdea.Click += btnSubmitIdea_Click;
             // 
             // tbDescription
             // 
