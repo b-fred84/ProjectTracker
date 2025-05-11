@@ -9,11 +9,11 @@ namespace ProjectTracker.Core.Interfaces
 {
     public interface IProjectIdeaRepository
     {
-        Task<IEnumerable<ProjectIdea>> GetAllAsync();
-        Task<ProjectIdea> GetProjectIdeaByIdAsync(int Id);
-        Task AddAsync(ProjectIdea projectIdea);
-        Task UpdateAsync(ProjectIdea projectIdea);
-        Task DeleteAsync(int Id);
+        Task<IEnumerable<ProjectIdea>> GetAllIdeasAsync();
+        Task<ProjectIdea> GetIdeaByIdAsync(int Id);
+        Task AddIdeaAsync(ProjectIdea projectIdea);
+        Task UpdateIdeaAsync(ProjectIdea projectIdea);
+        Task DeleteIdeaAsync(int Id);
 
     }
 }

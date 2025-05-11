@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.Data.SqlClient;
 using ProjectTracker.Core.Interfaces;
 using ProjectTracker.Core.Models;
 using System;
@@ -13,37 +14,39 @@ namespace ProjectTracker.DataAccess.Repositories
     public class ProjectIdeaRepository : IProjectIdeaRepository
     {
 
-        private readonly IDbConnection _dbConnection;
+        private readonly ISqlDataAccess _dbAccess;
 
-        public ProjectIdeaRepository(IDbConnection dbConnection)
+        public ProjectIdeaRepository(ISqlDataAccess dbAccess)
         {
-            _dbConnection = dbConnection;
+            _dbAccess = dbAccess;
         }
 
-        public async Task AddAsync(ProjectIdea projectIdea)
+        public async Task AddIdeaAsync(ProjectIdea projectIdea)
         {
             var sqlQuery = @"INSERT INTO ProjectIdea (Name, Description, Notes)
-                           VALUES(@Name, @Description, @Notes)";
+                       VALUES (@Name, @Description, @Notes)";
 
-            await _dbConnection.ExecuteAsync(sqlQuery, projectIdea);
+            await _dbAccess.SaveDataAsync(sqlQuery, projectIdea);
         }
 
-        public Task DeleteAsync(int Id)
+        public Task DeleteIdeaAsync(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ProjectIdea>> GetAllAsync()
+        public async Task<IEnumerable<ProjectIdea>> GetAllIdeasAsync()
+        {
+            var sqlQuery = "SELECT * FROM ProjectIdea";
+
+            return await _dbAccess.LoadDataAsync<ProjectIdea, dynamic>(sqlQuery, new {});
+        }
+
+        public Task<ProjectIdea> GetIdeaByIdAsync(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ProjectIdea> GetProjectIdeaByIdAsync(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(ProjectIdea projectIdea)
+        public Task UpdateIdeaAsync(ProjectIdea projectIdea)
         {
             throw new NotImplementedException();
         }

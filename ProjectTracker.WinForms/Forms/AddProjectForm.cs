@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using ProjectTracker.Core;
 using ProjectTracker.Core.Interfaces;
 using ProjectTracker.Core.Models;
-using ProjectTracker.DataAccess;
+
 
 namespace ProjectTracker.WinForms
 {
@@ -19,11 +19,14 @@ namespace ProjectTracker.WinForms
     {
 
         private readonly IProjectRepository _projectRepository;
-        public AddProjectForm(IProjectRepository projectRepository)
+        private readonly IPriorityRepository _priorityRepository;
+        private readonly IStatusRepository _statusRepository;
+        public AddProjectForm(IProjectRepository projectRepository, IPriorityRepository priorityRepository, IStatusRepository statusRepository)
         {
             InitializeComponent();
             _projectRepository = projectRepository;
-
+            _priorityRepository = priorityRepository;
+            _statusRepository = statusRepository;
         }
 
         private async void btnSubmitProject_Click(object sender, EventArgs e)
@@ -59,7 +62,7 @@ namespace ProjectTracker.WinForms
 
                 if (isValid)
                 {
-                    await _projectRepository.AddAsync(project);
+                    await _projectRepository.AddProjectAsync(project);
 
                     MessageBox.Show($"Project: {project.Name} successfully added.");
 
@@ -97,12 +100,12 @@ namespace ProjectTracker.WinForms
 
         private async void AddProjectForm_Load(object sender, EventArgs e)
         {
-            var priorties = await _projectRepository.GetAllPriorityAsync();
+            var priorties = await _priorityRepository.GetAllPriorityAsync();
             cmbPriority.DataSource = priorties;
             cmbPriority.DisplayMember = "Name";
             cmbPriority.ValueMember = "Id";
 
-            var statusList = await _projectRepository.GetAllStatusAsync();
+            var statusList = await _statusRepository.GetAllStatusAsync();
             cmbStatus.DataSource = statusList;
             cmbStatus.DisplayMember = "Name";
             cmbStatus.ValueMember = "Id";

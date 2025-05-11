@@ -9,13 +9,10 @@ namespace ProjectTracker.Core.Interfaces
 {
     public interface ITaskRepository
     {
-        Task<IEnumerable<TaskModel>> GetAllAsync();
-        Task<TaskModel> GetTaskById(int Id);
-        Task<IEnumerable<Priority>> GetAllPriorityAsync();
-        Task<IEnumerable<Status>> GetAllStatusAsync();
-        Task<IEnumerable<Project>> GetAllProjectsAsync();
-        Task DeletAsync(int Id);
-        Task AddAsync(TaskModel task);
-        Task UpdateAsync(TaskModel task);
+        Task<IEnumerable<TaskModel>> GetAllTasksAsync();
+        Task<TaskModel> GetTaskByIdAsync(int Id); 
+        Task DeleteTaskAsync(int Id);
+        Task AddTaskAsync(TaskModel task);
+        Task UpdateTaskAsync(TaskModel task);
     }
 }

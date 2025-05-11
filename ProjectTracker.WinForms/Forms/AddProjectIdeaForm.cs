@@ -47,7 +47,7 @@ namespace ProjectTracker.WinForms
 
                 if (isValid)
                 {
-                    await _projectIdeaRepository.AddAsync(projectIdea);
+                    await _projectIdeaRepository.AddIdeaAsync(projectIdea);
 
                     MessageBox.Show($"Project Idea: {projectIdea.Name} was successfully addeed.");
 

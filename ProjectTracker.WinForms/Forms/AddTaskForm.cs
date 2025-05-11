@@ -15,11 +15,20 @@ namespace ProjectTracker.WinForms
     public partial class AddTaskForm : Form
     {
         private readonly ITaskRepository _taskRepository;
+        private readonly IPriorityRepository _priorityRepository;
+        private readonly IStatusRepository _statusRepository;
+        private readonly IProjectRepository _projectRepository;
 
-        public AddTaskForm(ITaskRepository taskRepository)
+        public AddTaskForm(ITaskRepository taskRepository, 
+                           IPriorityRepository priorityRepository, 
+                           IStatusRepository statusRepository, 
+                           IProjectRepository projectRepository)
         {
             InitializeComponent();
             _taskRepository = taskRepository;
+            _priorityRepository = priorityRepository;
+            _statusRepository = statusRepository;
+            _projectRepository = projectRepository;
         }
 
         private async void btnSubmitTask_Click(object sender, EventArgs e)
@@ -56,7 +65,7 @@ namespace ProjectTracker.WinForms
 
                 if (isValid)
                 {
-                    await _taskRepository.AddAsync(task);
+                    await _taskRepository.AddTaskAsync(task);
 
                     MessageBox.Show($"Task: {task.Name} successfully added for Project: {cmbProject.Text}");
 
@@ -78,17 +87,17 @@ namespace ProjectTracker.WinForms
 
         private async void AddTaskForm_Load(object sender, EventArgs e)
         {
-            var projects = await _taskRepository.GetAllProjectsAsync();
+            var projects = await _projectRepository.GetAllProjectsAsync();
             cmbProject.DataSource = projects;
             cmbProject.DisplayMember = "Name";
             cmbProject.ValueMember = "Id";
 
-            var priorities = await _taskRepository.GetAllPriorityAsync();
+            var priorities = await _priorityRepository.GetAllPriorityAsync();
             cmbPriority.DataSource = priorities;
             cmbPriority.DisplayMember = "Name";
             cmbPriority.ValueMember = "Id";
 
-            var statusList = await _taskRepository.GetAllStatusAsync();
+            var statusList = await _statusRepository.GetAllStatusAsync();
             cmbStatus.DataSource = statusList;
             cmbStatus.DisplayMember = "Name";
             cmbStatus.ValueMember = "Id";

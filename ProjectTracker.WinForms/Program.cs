@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using ProjectTracker.Core.Interfaces;
 using ProjectTracker.DataAccess.Repositories;
+using ProjectTracker.DataAccess.SqlDataAccessWrappers;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using ProjectTracker.WinForms.Forms;
@@ -33,19 +34,27 @@ namespace ProjectTracker.WinForms
                     .Build();
 
 
-                string connectionString = config.GetConnectionString("ProjectTrackerConnectionString");
+                //string connectionString = config.GetConnectionString("ProjectTrackerConnectionString");
 
                 //adds required services
                 var services = new ServiceCollection()
-                    .AddScoped<IDbConnection>(_ => new SqlConnection(connectionString))
+                    //.AddScoped<IDbConnection>(_ => new SqlConnection(connectionString))
+                    .AddSingleton<IConfiguration>(config)
+
+                    .AddScoped<ISqlDataAccess, SqlDataAccess>()
+
                     .AddScoped<IProjectRepository, ProjectRepository>()
                     .AddScoped<ITaskRepository, TaskRepository>()
                     .AddScoped<IProjectIdeaRepository, ProjectIdeaRepository>()
+                    .AddScoped<IPriorityRepository, PriorityRepository>()
+                    .AddScoped<IStatusRepository, StatusRepository>()
+
                     .AddScoped<AddProjectForm>()
                     .AddScoped<AddTaskForm>()
                     .AddScoped<AddProjectIdeaForm>()
                     .AddScoped<ViewForm>()
                     .AddScoped<MainForm>()
+
                     .BuildServiceProvider();
 
 

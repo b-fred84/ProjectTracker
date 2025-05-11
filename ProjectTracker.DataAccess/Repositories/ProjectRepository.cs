@@ -7,6 +7,10 @@ using ProjectTracker.Core.Models;
 using ProjectTracker.Core.Interfaces;
 using System.Data;
 using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Protocols;
+using Microsoft.Extensions.Configuration;
+
 
 
 
@@ -14,31 +18,39 @@ namespace ProjectTracker.DataAccess.Repositories;
 
 public class ProjectRepository : IProjectRepository
 {
+    private readonly ISqlDataAccess _dbAccess;
 
-    private readonly IDbConnection _dbConnection;
-
-    public ProjectRepository(IDbConnection dbConnection)
+    public ProjectRepository(ISqlDataAccess dbAccess)
     {
-        _dbConnection = dbConnection;
+        _dbAccess = dbAccess;
     }
 
-   
+    //public async Task AddAsync(Project project)
+    //{
 
-    public async Task AddAsync(Project project)
+    //    var sqlQuery = @"INSERT INTO Project (Name, Description, StatusId, PriorityId, StartDate, FinishDate, Private)
+    //                   VALUES (@Name, @Description, @StatusId, @PriorityId, @StartDate, @FinishDate, @Private)";
+
+
+    //    await connection.ExecuteAsync(sqlQuery, project);
+    //}
+
+
+
+    public async Task AddProjectAsync(Project project)
     {
         var sqlQuery = @"INSERT INTO Project (Name, Description, StatusId, PriorityId, StartDate, FinishDate, Private)
                        VALUES (@Name, @Description, @StatusId, @PriorityId, @StartDate, @FinishDate, @Private)";
 
-        await  _dbConnection.ExecuteAsync(sqlQuery, project);
+        await _dbAccess.SaveDataAsync(sqlQuery, project);
     }
 
-  
 
-    public async Task<IEnumerable<Project>> GetAllAsync()
+    public async Task<IEnumerable<Project>> GetAllProjectsAsync()
     {
         var sqlQuery = "SELECT * FROM Project";
 
-        return await _dbConnection.QueryAsync<Project>(sqlQuery);
+        return await _dbAccess.LoadDataAsync<Project, dynamic>(sqlQuery, new {});
     }
 
     public Task<Project> GetProjectByIdAsync(int id)
@@ -46,29 +58,19 @@ public class ProjectRepository : IProjectRepository
         throw new NotImplementedException();
     }
 
-    public async Task<IEnumerable<Priority>> GetAllPriorityAsync()
-    {
-        var sqlQuery = "SELECT * FROM Priority";
-        return await _dbConnection.QueryAsync<Priority>(sqlQuery);
-    }
-
-    public async Task<IEnumerable<Status>> GetAllStatusAsync()
-    {
-        var sqlQuery = "SELECT * FROM Status";
-        return await _dbConnection.QueryAsync<Status>(sqlQuery);
-    }
 
 
 
-    public Task UpdateAsync(Project project)
-    {
-        throw new NotImplementedException();
-    }
 
-    public Task DeleteAsync(int id)
+    public Task DeleteProjectAsync(int id)
     {
         throw new NotImplementedException();
     }
 
  
+
+    public Task UpdateProjectAsync(Project project)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -25,7 +25,7 @@ namespace ProjectTracker.WinForms.Forms
         {
             try
             {
-                var projects = await _projectRepository.GetAllAsync();
+                var projects = await _projectRepository.GetAllProjectsAsync();
 
                 DataGridViewButtonColumn viewButtonColumn = new DataGridViewButtonColumn();
                 viewButtonColumn.Name = "View/Edit";
