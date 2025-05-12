@@ -53,24 +53,37 @@ public class ProjectRepository : IProjectRepository
         return await _dbAccess.LoadDataAsync<Project, dynamic>(sqlQuery, new {});
     }
 
-    public Task<Project> GetProjectByIdAsync(int id)
+    public async Task<Project> GetProjectByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var sqlQuery = "SELECT * From Project WHERE Id = @Id";
+
+        var results = await _dbAccess.LoadDataAsync<Project, dynamic> (sqlQuery, new { Id = id });
+
+        return results.FirstOrDefault();
     }
 
 
-
-
-
-    public Task DeleteProjectAsync(int id)
+    public async Task UpdateProjectAsync(Project project)
     {
-        throw new NotImplementedException();
+        var sqlQuery = @"UPDATE Project 
+                         SET 
+                            Name = @Name, 
+                            Description = @Description, 
+                            StatusId = @StatusId, 
+                            PriorityId = @PriorityId, 
+                            StartDate = @StartDate, 
+                            FinishDate = @FinishDate, 
+                            Private = @Private
+                         WHERE Id = @Id";
+
+        await _dbAccess.SaveDataAsync(sqlQuery, project);
     }
 
- 
-
-    public Task UpdateProjectAsync(Project project)
+    public async Task DeleteProjectAsync(int id)
     {
-        throw new NotImplementedException();
+        var sqlQuery = "DELETE FROM Project WHERE Id = @Id";
+
+        await _dbAccess.SaveDataAsync(sqlQuery, new { Id = id });
     }
+
 }

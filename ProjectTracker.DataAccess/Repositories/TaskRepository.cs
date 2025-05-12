@@ -22,30 +22,52 @@ namespace ProjectTracker.DataAccess.Repositories
 
         public async Task AddTaskAsync(TaskModel task)
         {
-            var sqlQuery = @"INSERT INTO Task (ProjectId, Name, Details, StatusId, PriorityId, StartDate, FinishDate, Private)
+            var sqlQuery = @"INSERT INTO [Task] (ProjectId, Name, Details, StatusId, PriorityId, StartDate, FinishDate, Private)
                            VALUES (@ProjectId, @Name, @Details, @StatusId, @PriorityId, @StartDate, @FinishDate, @Private)";
 
             await _dbAccess.SaveDataAsync(sqlQuery, task);
         }
 
-        public Task DeleteTaskAsync(int Id)
+        public async Task<IEnumerable<TaskModel>> GetAllTasksAsync()
         {
-            throw new NotImplementedException();
+            var sqlQuery = "SELECT * FROM [Task]";
+
+            return await _dbAccess.LoadDataAsync<TaskModel, dynamic>(sqlQuery, new { });
         }
 
-        public Task<IEnumerable<TaskModel>> GetAllTasksAsync()
+        public async Task<TaskModel> GetTaskByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var sqlQuery = "SELECT * FROM [Task] WHERE Id = @Id";
+
+            var results = await _dbAccess.LoadDataAsync<TaskModel, dynamic> (sqlQuery, new { Id = id });
+
+            return results.FirstOrDefault();
         }
 
-        public Task<TaskModel> GetTaskByIdAsync(int Id)
+        public async Task UpdateTaskAsync(TaskModel task)
         {
-            throw new NotImplementedException();
+            var sqlQuery = @"UPDATE [Task]
+                             SET 
+                                ProjectId = @ProjectId,
+                                Name = @Name, 
+                                Details = @Details, 
+                                StatusId = @StatusId, 
+                                PriorityId = @PriorityId, 
+                                StartDate = @StartDate, 
+                                FinishDate = @FinishDate, 
+                                Private = @Private
+                             WHERE Id = @Id";
+
+            await _dbAccess.SaveDataAsync(sqlQuery, task);
         }
 
-        public Task UpdateTaskAsync(TaskModel task)
+
+        public async Task DeleteTaskAsync(int id)
         {
-            throw new NotImplementedException();
+            var sqlQuery = "DELETE FROM [Task] WHERE Id = @Id";
+
+            await _dbAccess.SaveDataAsync(sqlQuery, new { Id = id });
         }
+
     }
 }

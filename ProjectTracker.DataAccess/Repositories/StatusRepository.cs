@@ -19,13 +19,13 @@ namespace ProjectTracker.DataAccess.Repositories
 
         public async Task<IEnumerable<Status>> GetAllStatusAsync()
         {
-            var sql = "SELECT * FROM Status";
+            var sql = "SELECT * FROM [Status]";
             return await _dbAccess.LoadDataAsync<Status, dynamic>(sql, new {});
         }
 
         public async Task<Status> GetStatusByIdAsync(int id)
         {
-            var sql = "SELECT * FROM Status WHERE Id = @Id";
+            var sql = "SELECT * FROM [Status] WHERE Id = @Id";
 
             var results = await _dbAccess.LoadDataAsync<Status, dynamic>(sql, new {Id = id});
             return results.FirstOrDefault();

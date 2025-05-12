@@ -29,10 +29,6 @@ namespace ProjectTracker.DataAccess.Repositories
             await _dbAccess.SaveDataAsync(sqlQuery, projectIdea);
         }
 
-        public Task DeleteIdeaAsync(int Id)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<IEnumerable<ProjectIdea>> GetAllIdeasAsync()
         {
@@ -41,14 +37,34 @@ namespace ProjectTracker.DataAccess.Repositories
             return await _dbAccess.LoadDataAsync<ProjectIdea, dynamic>(sqlQuery, new {});
         }
 
-        public Task<ProjectIdea> GetIdeaByIdAsync(int Id)
+        public async Task<ProjectIdea> GetIdeaByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var sqlQuery = "SELECT * FROM ProjectIdea WHERE Id = @Id";
+            
+            var results = await _dbAccess.LoadDataAsync<ProjectIdea, dynamic>(sqlQuery, new {Id = id});
+
+            return results.FirstOrDefault();
         }
 
-        public Task UpdateIdeaAsync(ProjectIdea projectIdea)
+        public async Task UpdateIdeaAsync(ProjectIdea projectIdea)
         {
-            throw new NotImplementedException();
+            var sqlQuery = @"UPDATE ProjectIdea 
+                             SET
+                                Name = @Name,
+                                Description = @Description,
+                                Notes = @Notes
+                             WHERE Id =@Id";
+
+            await _dbAccess.SaveDataAsync(sqlQuery, projectIdea);
+
         }
+
+        public async Task DeleteIdeaAsync(int id)
+        {
+            var sqlQuery = "DELETE FROM ProjectIdea WHERE Id = @Id";
+
+            await _dbAccess.SaveDataAsync(sqlQuery, new { Id = id });
+        }
+
     }
 }
