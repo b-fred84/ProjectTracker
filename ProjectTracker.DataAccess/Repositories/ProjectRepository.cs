@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ProjectTracker.Core.Models;
-using ProjectTracker.Core.Interfaces;
 using System.Data;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Protocols;
 using Microsoft.Extensions.Configuration;
+using ProjectTracker.Core.Interfaces.Repos;
+using ProjectTracker.Core.Interfaces.Data;
 
 
 

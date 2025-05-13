@@ -11,6 +11,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ProjectTracker.DB", "Projec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectTracker.DataAccess", "ProjectTracker.DataAccess\ProjectTracker.DataAccess.csproj", "{9F61408F-C310-436A-9411-BD7BDC0A3EDE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectTracker.Services", "ProjectTracker.Services\ProjectTracker.Services.csproj", "{6FA68E46-DE17-4994-9AE1-2072FD694CFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{9F61408F-C310-436A-9411-BD7BDC0A3EDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F61408F-C310-436A-9411-BD7BDC0A3EDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F61408F-C310-436A-9411-BD7BDC0A3EDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FA68E46-DE17-4994-9AE1-2072FD694CFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FA68E46-DE17-4994-9AE1-2072FD694CFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FA68E46-DE17-4994-9AE1-2072FD694CFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FA68E46-DE17-4994-9AE1-2072FD694CFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

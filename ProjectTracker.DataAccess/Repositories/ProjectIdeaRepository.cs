@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
-using ProjectTracker.Core.Interfaces;
+using ProjectTracker.Core.Interfaces.Data;
+using ProjectTracker.Core.Interfaces.Repos;
 using ProjectTracker.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ProjectTracker.DataAccess.Repositories
 {
-    public class ProjectIdeaRepository : IProjectIdeaRepository
+    public class ProjectIdeaRepository : IIdeaRepository
     {
 
         private readonly ISqlDataAccess _dbAccess;

@@ -1,12 +1,15 @@
 using System.ServiceProcess;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using ProjectTracker.Core.Interfaces;
 using ProjectTracker.DataAccess.Repositories;
 using ProjectTracker.DataAccess.SqlDataAccessWrappers;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using ProjectTracker.WinForms.Forms;
+using ProjectTracker.Core.Interfaces.Repos;
+using ProjectTracker.Core.Interfaces.Data;
+using ProjectTracker.Core.Interfaces.Services;
+using ProjectTracker.Services;
 
 namespace ProjectTracker.WinForms
 {
@@ -45,9 +48,11 @@ namespace ProjectTracker.WinForms
 
                     .AddScoped<IProjectRepository, ProjectRepository>()
                     .AddScoped<ITaskRepository, TaskRepository>()
-                    .AddScoped<IProjectIdeaRepository, ProjectIdeaRepository>()
+                    .AddScoped<IIdeaRepository, ProjectIdeaRepository>()
                     .AddScoped<IPriorityRepository, PriorityRepository>()
                     .AddScoped<IStatusRepository, StatusRepository>()
+
+                    .AddScoped<IProjectViewService, ProjectViewService>()
 
                     .AddScoped<AddProjectForm>()
                     .AddScoped<AddTaskForm>()

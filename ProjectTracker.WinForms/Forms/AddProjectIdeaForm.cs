@@ -1,4 +1,4 @@
-﻿using ProjectTracker.Core.Interfaces;
+﻿using ProjectTracker.Core.Interfaces.Repos;
 using ProjectTracker.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -14,9 +14,9 @@ namespace ProjectTracker.WinForms
 {
     public partial class AddProjectIdeaForm : Form
     {
-        private readonly IProjectIdeaRepository _projectIdeaRepository;
+        private readonly IIdeaRepository _projectIdeaRepository;
 
-        public AddProjectIdeaForm(IProjectIdeaRepository projectIdeaRepository)
+        public AddProjectIdeaForm(IIdeaRepository projectIdeaRepository)
         {
             InitializeComponent();
             _projectIdeaRepository = projectIdeaRepository;

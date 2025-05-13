@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectTracker.Core.Interfaces
+namespace ProjectTracker.Core.Interfaces.Repos
 {
-    public interface IProjectIdeaRepository
+    public interface IIdeaRepository
     {
         Task<IEnumerable<ProjectIdea>> GetAllIdeasAsync();
         Task<ProjectIdea> GetIdeaByIdAsync(int Id);

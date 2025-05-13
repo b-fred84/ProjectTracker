@@ -1,4 +1,5 @@
-﻿using ProjectTracker.Core.Interfaces;
+﻿using ProjectTracker.Core.Interfaces.Data;
+using ProjectTracker.Core.Interfaces.Repos;
 using ProjectTracker.Core.Models;
 using System;
 using System.Collections.Generic;

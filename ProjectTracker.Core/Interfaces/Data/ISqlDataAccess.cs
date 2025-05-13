@@ -1,5 +1,4 @@
-﻿
-namespace ProjectTracker.Core.Interfaces
+﻿namespace ProjectTracker.Core.Interfaces.Data
 {
     public interface ISqlDataAccess
     {

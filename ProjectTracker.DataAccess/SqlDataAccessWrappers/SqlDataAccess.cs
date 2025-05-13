@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using ProjectTracker.Core.Interfaces;
+using ProjectTracker.Core.Interfaces.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;

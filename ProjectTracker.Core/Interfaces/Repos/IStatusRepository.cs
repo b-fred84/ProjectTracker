@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectTracker.Core.Interfaces
+namespace ProjectTracker.Core.Interfaces.Repos
 {
     public interface IStatusRepository
     {
