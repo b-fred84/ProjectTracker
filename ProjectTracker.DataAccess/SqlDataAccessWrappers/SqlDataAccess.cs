@@ -21,12 +21,14 @@ namespace ProjectTracker.DataAccess.SqlDataAccessWrappers
             _config = config;
         }
 
-        public async Task<IEnumerable<T>> LoadDataAsync<T, U>(string sqlQuery, U parameters, string connectionString = "ProjectTrackerConnectionString")
+        public async Task<IEnumerable<T>> LoadDataAsync<T, U>(string storedProcedure, U parameters,
+                                                              string connectionString = "ProjectTrackerConnectionString")
         {
             using IDbConnection connection = new SqlConnection(_config.GetConnectionString(connectionString));
 
-            return await connection.QueryAsync<T>(sqlQuery, parameters);
+            return await connection.QueryAsync<T>(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
         }
+
 
         public async Task SaveDataAsync<T>(string sqlQuery, T parameters, string connectionString = "ProjectTrackerConnectionString")
         {

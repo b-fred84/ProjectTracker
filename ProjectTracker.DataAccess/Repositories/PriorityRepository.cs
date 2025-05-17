@@ -18,8 +18,8 @@ namespace ProjectTracker.DataAccess.Repositories
         }
         public async Task<IEnumerable<Priority>> GetAllPriorityAsync()
         {
-            var sql = "SELECT * FROM Priority";
-            return await _dbAccess.LoadDataAsync<Priority, dynamic>(sql, new { });
+            
+            return await _dbAccess.LoadDataAsync<Priority, dynamic>("dbo.GetAllPriorities", new { });
         }
 
         public Task<Priority> GetPriorityByIdAsync(int Id)

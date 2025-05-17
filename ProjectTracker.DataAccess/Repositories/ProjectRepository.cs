@@ -49,9 +49,15 @@ public class ProjectRepository : IProjectRepository
 
     public async Task<IEnumerable<Project>> GetAllProjectsAsync()
     {
-        var sqlQuery = "SELECT * FROM Project";
+        return await _dbAccess.LoadDataAsync<Project, dynamic>("dbo.GetAllProjects", new {});
+    }
 
-        return await _dbAccess.LoadDataAsync<Project, dynamic>(sqlQuery, new {});
+    public async Task<IEnumerable<Project>> GetProjectsFilterableAsync(
+        int? statusId, int? priorityId, string sortBy, string sortOrder)
+    {
+        return await _dbAccess.LoadDataAsync<Project, dynamic>(
+            "dbo.GetAllProjects",
+            new { StatusId = statusId, PriorityId = priorityId, SortBy = sortBy, SortOrder = sortOrder });
     }
 
     public async Task<Project> GetProjectByIdAsync(int id)
@@ -62,6 +68,8 @@ public class ProjectRepository : IProjectRepository
 
         return results.FirstOrDefault();
     }
+
+ 
 
 
     public async Task UpdateProjectAsync(Project project)

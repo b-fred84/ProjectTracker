@@ -1,14 +1,18 @@
-﻿using ProjectTracker.Core.Interfaces.Repos;
+﻿using Microsoft.Data.SqlClient;
+using ProjectTracker.Core.Interfaces.Repos;
+using ProjectTracker.Core.Interfaces.Services;
+using ProjectTracker.Core.Models;
 using ProjectTracker.Core.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ProjectTracker.Services
 {
-    public class TaskViewService
+    public class TaskViewService : ITaskViewService
     {
         private readonly ITaskRepository _taskRepo;
         private readonly IProjectRepository _projectRepo;
@@ -25,7 +29,57 @@ namespace ProjectTracker.Services
 
         //public async Task<IEnumerable<TaskListViewModel>> GetAllTasksAsync()
         //{
-           
+
         //}
+
+        public async Task<IEnumerable<TaskListViewModel>> GetAllTasksFilteredAsync(int? projectId, int? statusId, int? priorityId, string sortBy, string sortOrder)
+        {
+            var tasks = await _taskRepo.GetTasksFilterableAsync(projectId, statusId, priorityId, sortBy, sortOrder);
+            var projects = await _projectRepo.GetAllProjectsAsync();
+            var statuses = await _statusRepo.GetAllStatusAsync();
+            var priorities = await _priorityRepo.GetAllPriorityAsync();
+
+            Dictionary<int, string> projectDict = projects.ToDictionary(p => p.Id, p => p.Name);
+            Dictionary<int, string> statusDict = statuses.ToDictionary(s => s.Id, s => s.Name);
+            Dictionary<int, string> priorityDict = priorities.ToDictionary(p => p.Id, p => p.Name);
+
+            List<TaskListViewModel> taskListVM = new List<TaskListViewModel>();
+
+            foreach (var task in tasks)
+            {
+                TaskListViewModel taskVM = new TaskListViewModel()
+                {
+                    Id = task.Id,
+                    Name = task.Name,
+                    ProjectName = projectDict[task.ProjectId],
+                    Status = statusDict[task.StatusId],
+                    Priority = priorityDict[task.PriorityId],
+                    StartDate = task.StartDate,
+                    FinishDate = task.FinishDate
+                };
+                taskListVM.Add(taskVM);
+            }
+
+            return taskListVM;
+        }
+
+        //dont need these?  doing it from projectViewService.
+        //or is it better to reproduce then each service is doing what it needs
+        //rather than using other services,  but code gets repetastive - look at this later?
+        public Task<IEnumerable<Priority>> GetPrioritiesAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Status>> GetStatusesAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
+
+
+
+
+
+    

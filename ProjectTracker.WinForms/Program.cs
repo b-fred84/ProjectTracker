@@ -48,11 +48,12 @@ namespace ProjectTracker.WinForms
 
                     .AddScoped<IProjectRepository, ProjectRepository>()
                     .AddScoped<ITaskRepository, TaskRepository>()
-                    .AddScoped<IIdeaRepository, ProjectIdeaRepository>()
+                    .AddScoped<IIdeaRepository, IdeaRepository>()
                     .AddScoped<IPriorityRepository, PriorityRepository>()
                     .AddScoped<IStatusRepository, StatusRepository>()
 
                     .AddScoped<IProjectViewService, ProjectViewService>()
+                    .AddScoped<ITaskViewService, TaskViewService>()
 
                     .AddScoped<AddProjectForm>()
                     .AddScoped<AddTaskForm>()

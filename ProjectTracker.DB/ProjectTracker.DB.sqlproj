@@ -57,6 +57,7 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables" />
+    <Folder Include="StoredProcedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Task.sql" />
@@ -64,6 +65,11 @@
     <Build Include="Tables\ProjectIdea.sql" />
     <Build Include="Tables\Status.sql" />
     <Build Include="Tables\Priority.sql" />
+    <Build Include="StoredProcedures\GetAllProjects.sql" />
+    <Build Include="StoredProcedures\GetAllPriorities.sql" />
+    <Build Include="StoredProcedures\GetAllStatuses.sql" />
+    <Build Include="StoredProcedures\GetAllIdeas.sql" />
+    <Build Include="StoredProcedures\GetAllTasks.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ProjectTracker.DB.refactorlog" />

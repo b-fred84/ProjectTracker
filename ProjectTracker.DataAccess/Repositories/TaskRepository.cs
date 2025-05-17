@@ -28,12 +28,18 @@ namespace ProjectTracker.DataAccess.Repositories
 
             await _dbAccess.SaveDataAsync(sqlQuery, task);
         }
-
+        //GetAll needed??? maybe just use getAllFileterable (then can rename to just GetAll)
         public async Task<IEnumerable<TaskModel>> GetAllTasksAsync()
         {
-            var sqlQuery = "SELECT * FROM [Task]";
+            return await _dbAccess.LoadDataAsync<TaskModel, dynamic>("dbo.GetAllTasks", new { });
+        }
 
-            return await _dbAccess.LoadDataAsync<TaskModel, dynamic>(sqlQuery, new { });
+        public async Task<IEnumerable<TaskModel>> GetTasksFilterableAsync(int? projectId, int? statusId, int? priorityId,
+                                                                     string sortBy, string sortOrder)
+        {
+            return await _dbAccess.LoadDataAsync<TaskModel, dynamic>(
+                "dbo.GetAllTasks",
+                new { ProjectId = projectId, StatusId = statusId, PriorityId = priorityId, SortBy = sortBy, SortOrder = sortOrder });
         }
 
         public async Task<TaskModel> GetTaskByIdAsync(int id)
@@ -70,5 +76,6 @@ namespace ProjectTracker.DataAccess.Repositories
             await _dbAccess.SaveDataAsync(sqlQuery, new { Id = id });
         }
 
+       
     }
 }

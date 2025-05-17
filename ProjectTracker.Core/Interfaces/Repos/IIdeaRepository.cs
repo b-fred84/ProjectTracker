@@ -10,10 +10,10 @@ namespace ProjectTracker.Core.Interfaces.Repos
     public interface IIdeaRepository
     {
         Task<IEnumerable<ProjectIdea>> GetAllIdeasAsync();
-        Task<ProjectIdea> GetIdeaByIdAsync(int Id);
+        Task<ProjectIdea> GetIdeaByIdAsync(int id);
         Task AddIdeaAsync(ProjectIdea projectIdea);
         Task UpdateIdeaAsync(ProjectIdea projectIdea);
-        Task DeleteIdeaAsync(int Id);
+        Task DeleteIdeaAsync(int id);
 
     }
 }

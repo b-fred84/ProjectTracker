@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace ProjectTracker.DataAccess.Repositories
 {
-    public class ProjectIdeaRepository : IIdeaRepository
+    public class IdeaRepository : IIdeaRepository
     {
 
         private readonly ISqlDataAccess _dbAccess;
 
-        public ProjectIdeaRepository(ISqlDataAccess dbAccess)
+        public IdeaRepository(ISqlDataAccess dbAccess)
         {
             _dbAccess = dbAccess;
         }
@@ -32,10 +32,8 @@ namespace ProjectTracker.DataAccess.Repositories
 
 
         public async Task<IEnumerable<ProjectIdea>> GetAllIdeasAsync()
-        {
-            var sqlQuery = "SELECT * FROM ProjectIdea";
-
-            return await _dbAccess.LoadDataAsync<ProjectIdea, dynamic>(sqlQuery, new {});
+        { 
+            return await _dbAccess.LoadDataAsync<ProjectIdea, dynamic>("dbo.GetAllIdeas", new {});
         }
 
         public async Task<ProjectIdea> GetIdeaByIdAsync(int id)

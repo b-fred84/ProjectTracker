@@ -1,4 +1,5 @@
-﻿using ProjectTracker.Core.ViewModels;
+﻿using ProjectTracker.Core.Models;
+using ProjectTracker.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,10 @@ namespace ProjectTracker.Core.Interfaces.Services
 {
     public interface IProjectViewService
     {
-        Task<IEnumerable<ProjectListViewModel>> GetAllProjectsAsync();
+        Task<IEnumerable<Project>> GetAllProjectsAsync();
+        Task<IEnumerable<ProjectListViewModel>> GetAllProjectsFilteredAsync(int? statusId, int? priorityId, string sortBy, string sortOrder);
+        Task<IEnumerable<Status>> GetStatusesAsync();
+        Task<IEnumerable<Priority>> GetPrioritiesAsync();
 
     }
 }

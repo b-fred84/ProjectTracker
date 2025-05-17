@@ -26,9 +26,19 @@ namespace ProjectTracker.Services
 
         }
 
-        public async Task<IEnumerable<ProjectListViewModel>> GetAllProjectsAsync()
+        //do i still even need this?? delete later or fill in if there is reason to have it
+        public async Task<IEnumerable<Project>> GetAllProjectsAsync()
         {
             var projects = await _projectRepo.GetAllProjectsAsync();
+
+            return projects;
+        }
+
+            
+
+        public async Task<IEnumerable<ProjectListViewModel>> GetAllProjectsFilteredAsync(int? statusId, int? priorityId, string sortBy, string sortOrder)
+        {
+            var projects = await _projectRepo.GetProjectsFilterableAsync(statusId, priorityId, sortBy, sortOrder);
             var statuses = await _statusRepo.GetAllStatusAsync();
             var priorities = await _priorityRepo.GetAllPriorityAsync();
 
@@ -54,5 +64,20 @@ namespace ProjectTracker.Services
 
             return projectListVM;
         }
+
+        public async Task<IEnumerable<Status>> GetStatusesAsync()
+        {
+            var statuses = await _statusRepo.GetAllStatusAsync();
+            
+            return statuses;
+        }
+        public async Task<IEnumerable<Priority>> GetPrioritiesAsync()
+        {
+            var priorities = await _priorityRepo.GetAllPriorityAsync();
+
+            return priorities;
+        }
+
+       
     }
 }

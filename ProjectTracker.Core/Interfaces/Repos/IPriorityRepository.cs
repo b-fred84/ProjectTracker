@@ -10,7 +10,7 @@ namespace ProjectTracker.Core.Interfaces.Repos
     public interface IPriorityRepository
     {
         Task<IEnumerable<Priority>> GetAllPriorityAsync();
-        Task<Priority> GetPriorityByIdAsync(int Id);
+        Task<Priority> GetPriorityByIdAsync(int id);
 
     }
 }
