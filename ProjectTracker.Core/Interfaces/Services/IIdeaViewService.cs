@@ -10,8 +10,9 @@ namespace ProjectTracker.Core.Interfaces.Services
 {
     public interface IIdeaViewService
     {
-        Task<IEnumerable<IdeaListViewModel>> GetAllIdeasAsync();
-
-        Task<ProjectIdea> GetIdeaAsync(int Id);
+        Task<IEnumerable<IdeaListViewModel>> GetAllIdeasAsync(string sortBy, string sortOrder);
+        Task<ProjectIdea> GetIdeaAsync(int id);
+        Task UpdateIdeaAsync(ProjectIdea idea);
+        Task DeleteIdeaAsync(int id);
     }
 }

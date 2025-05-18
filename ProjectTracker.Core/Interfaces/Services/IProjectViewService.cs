@@ -12,8 +12,11 @@ namespace ProjectTracker.Core.Interfaces.Services
     {
         Task<IEnumerable<Project>> GetAllProjectsAsync();
         Task<IEnumerable<ProjectListViewModel>> GetAllProjectsFilteredAsync(int? statusId, int? priorityId, string sortBy, string sortOrder);
+        Task<Project> GetProjectByIdAsync(int id);
         Task<IEnumerable<Status>> GetStatusesAsync();
         Task<IEnumerable<Priority>> GetPrioritiesAsync();
+        Task UpdateProjectAsync(Project project);
+        Task DeleteProjectAsync(int id);
 
     }
 }

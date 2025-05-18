@@ -54,11 +54,12 @@ namespace ProjectTracker.WinForms
 
                     .AddScoped<IProjectViewService, ProjectViewService>()
                     .AddScoped<ITaskViewService, TaskViewService>()
+                    .AddScoped<IIdeaViewService, IdeaViewService>()
 
                     .AddScoped<AddProjectForm>()
                     .AddScoped<AddTaskForm>()
                     .AddScoped<AddProjectIdeaForm>()
-                    .AddScoped<ViewForm>()
+                    .AddTransient<ViewForm>()
                     .AddScoped<MainForm>()
 
                     .BuildServiceProvider();

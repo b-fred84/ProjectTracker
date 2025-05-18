@@ -75,7 +75,7 @@
             tbDescription.Multiline = true;
             tbDescription.Name = "tbDescription";
             tbDescription.ScrollBars = ScrollBars.Vertical;
-            tbDescription.Size = new Size(452, 108);
+            tbDescription.Size = new Size(514, 108);
             tbDescription.TabIndex = 7;
             // 
             // btnSubmitProject

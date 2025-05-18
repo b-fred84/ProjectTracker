@@ -38,6 +38,7 @@ namespace ProjectTracker.WinForms
         private void btnView_Click(object sender, EventArgs e)
         {
             ViewForm viewForm = _serviceProvider.GetRequiredService<ViewForm>();
+            
             viewForm.ShowDialog();
         }
     }

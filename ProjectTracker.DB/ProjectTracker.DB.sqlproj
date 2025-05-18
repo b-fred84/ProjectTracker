@@ -58,6 +58,7 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="StoredProcedures" />
+    <Folder Include="Triggers" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Task.sql" />
@@ -70,6 +71,10 @@
     <Build Include="StoredProcedures\GetAllStatuses.sql" />
     <Build Include="StoredProcedures\GetAllIdeas.sql" />
     <Build Include="StoredProcedures\GetAllTasks.sql" />
+    <Build Include="StoredProcedures\GetIdeaById.sql" />
+    <Build Include="StoredProcedures\GetTaskById.sql" />
+    <Build Include="Triggers\trgHasTasks.sql" />
+    <Build Include="StoredProcedures\GetProjectById.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ProjectTracker.DB.refactorlog" />

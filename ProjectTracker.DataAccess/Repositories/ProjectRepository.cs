@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Protocols;
 using Microsoft.Extensions.Configuration;
 using ProjectTracker.Core.Interfaces.Repos;
 using ProjectTracker.Core.Interfaces.Data;
+using System.Threading.Tasks.Dataflow;
 
 
 
@@ -62,14 +63,10 @@ public class ProjectRepository : IProjectRepository
 
     public async Task<Project> GetProjectByIdAsync(int id)
     {
-        var sqlQuery = "SELECT * From Project WHERE Id = @Id";
-
-        var results = await _dbAccess.LoadDataAsync<Project, dynamic> (sqlQuery, new { Id = id });
+        var results = await _dbAccess.LoadDataAsync<Project, dynamic> ("dbo.GetProjectById", new { Id = id });
 
         return results.FirstOrDefault();
     }
-
- 
 
 
     public async Task UpdateProjectAsync(Project project)

@@ -31,16 +31,14 @@ namespace ProjectTracker.DataAccess.Repositories
         }
 
 
-        public async Task<IEnumerable<ProjectIdea>> GetAllIdeasAsync()
+        public async Task<IEnumerable<ProjectIdea>> GetAllIdeasAsync(string sortBy, string sortOrder)
         { 
-            return await _dbAccess.LoadDataAsync<ProjectIdea, dynamic>("dbo.GetAllIdeas", new {});
+            return await _dbAccess.LoadDataAsync<ProjectIdea, dynamic>("dbo.GetAllIdeas", new {sortBy, sortOrder});
         }
 
         public async Task<ProjectIdea> GetIdeaByIdAsync(int id)
-        {
-            var sqlQuery = "SELECT * FROM ProjectIdea WHERE Id = @Id";
-            
-            var results = await _dbAccess.LoadDataAsync<ProjectIdea, dynamic>(sqlQuery, new {Id = id});
+        { 
+            var results = await _dbAccess.LoadDataAsync<ProjectIdea, dynamic>("dbo.GetIdeaById", new {Id = id});
 
             return results.FirstOrDefault();
         }

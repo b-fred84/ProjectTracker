@@ -1,6 +1,6 @@
-﻿namespace ProjectTracker.WinForms
+﻿namespace ProjectTracker.WinForms.Forms
 {
-    partial class AddTaskForm
+    partial class ViewProjectForm
     {
         /// <summary>
         /// Required designer variable.
@@ -37,19 +37,19 @@
             lbPriority = new Label();
             cmbPriority = new ComboBox();
             cbPrivate = new CheckBox();
-            btnSubmitTask = new Button();
-            tbDetails = new TextBox();
-            lbDetails = new Label();
+            btnSubmitEdit = new Button();
+            tbDescription = new TextBox();
+            lbDescription = new Label();
             tbName = new TextBox();
             lbName = new Label();
-            cmbProject = new ComboBox();
-            lbProject = new Label();
+            btnEdit = new Button();
+            btnDelete = new Button();
             SuspendLayout();
             // 
             // lbFinishDate
             // 
             lbFinishDate.AutoSize = true;
-            lbFinishDate.Location = new Point(30, 365);
+            lbFinishDate.Location = new Point(30, 352);
             lbFinishDate.Name = "lbFinishDate";
             lbFinishDate.Size = new Size(38, 15);
             lbFinishDate.TabIndex = 31;
@@ -58,7 +58,7 @@
             // lbStartDate
             // 
             lbStartDate.AutoSize = true;
-            lbStartDate.Location = new Point(30, 321);
+            lbStartDate.Location = new Point(30, 303);
             lbStartDate.Name = "lbStartDate";
             lbStartDate.Size = new Size(31, 15);
             lbStartDate.TabIndex = 30;
@@ -66,7 +66,7 @@
             // 
             // dtpFinishDate
             // 
-            dtpFinishDate.Location = new Point(103, 365);
+            dtpFinishDate.Location = new Point(103, 352);
             dtpFinishDate.Name = "dtpFinishDate";
             dtpFinishDate.ShowCheckBox = true;
             dtpFinishDate.Size = new Size(200, 23);
@@ -74,7 +74,7 @@
             // 
             // dtpStartDate
             // 
-            dtpStartDate.Location = new Point(103, 321);
+            dtpStartDate.Location = new Point(103, 303);
             dtpStartDate.Name = "dtpStartDate";
             dtpStartDate.ShowCheckBox = true;
             dtpStartDate.Size = new Size(200, 23);
@@ -83,7 +83,7 @@
             // lbStatus
             // 
             lbStatus.AutoSize = true;
-            lbStatus.Location = new Point(312, 266);
+            lbStatus.Location = new Point(322, 244);
             lbStatus.Name = "lbStatus";
             lbStatus.Size = new Size(39, 15);
             lbStatus.TabIndex = 27;
@@ -93,7 +93,7 @@
             // 
             cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbStatus.FormattingEnabled = true;
-            cmbStatus.Location = new Point(357, 266);
+            cmbStatus.Location = new Point(367, 244);
             cmbStatus.Name = "cmbStatus";
             cmbStatus.Size = new Size(153, 23);
             cmbStatus.TabIndex = 26;
@@ -101,7 +101,7 @@
             // lbPriority
             // 
             lbPriority.AutoSize = true;
-            lbPriority.Location = new Point(30, 266);
+            lbPriority.Location = new Point(30, 244);
             lbPriority.Name = "lbPriority";
             lbPriority.Size = new Size(45, 15);
             lbPriority.TabIndex = 25;
@@ -111,7 +111,7 @@
             // 
             cmbPriority.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbPriority.FormattingEnabled = true;
-            cmbPriority.Location = new Point(103, 266);
+            cmbPriority.Location = new Point(103, 244);
             cmbPriority.Name = "cmbPriority";
             cmbPriority.Size = new Size(153, 23);
             cmbPriority.TabIndex = 24;
@@ -126,33 +126,33 @@
             cbPrivate.Text = "Private";
             cbPrivate.UseVisualStyleBackColor = true;
             // 
-            // btnSubmitTask
+            // btnSubmitEdit
             // 
-            btnSubmitTask.Location = new Point(764, 365);
-            btnSubmitTask.Name = "btnSubmitTask";
-            btnSubmitTask.Size = new Size(75, 23);
-            btnSubmitTask.TabIndex = 22;
-            btnSubmitTask.Text = "SUBMIT";
-            btnSubmitTask.UseVisualStyleBackColor = true;
-            btnSubmitTask.Click += btnSubmitTask_Click;
+            btnSubmitEdit.Location = new Point(764, 365);
+            btnSubmitEdit.Name = "btnSubmitEdit";
+            btnSubmitEdit.Size = new Size(75, 23);
+            btnSubmitEdit.TabIndex = 22;
+            btnSubmitEdit.Text = "SUBMIT";
+            btnSubmitEdit.UseVisualStyleBackColor = true;
+            btnSubmitEdit.Click += btnSubmitEdit_Click;
             // 
-            // tbDetails
+            // tbDescription
             // 
-            tbDetails.Location = new Point(103, 143);
-            tbDetails.Multiline = true;
-            tbDetails.Name = "tbDetails";
-            tbDetails.ScrollBars = ScrollBars.Vertical;
-            tbDetails.Size = new Size(532, 108);
-            tbDetails.TabIndex = 21;
+            tbDescription.Location = new Point(103, 101);
+            tbDescription.Multiline = true;
+            tbDescription.Name = "tbDescription";
+            tbDescription.ScrollBars = ScrollBars.Vertical;
+            tbDescription.Size = new Size(514, 108);
+            tbDescription.TabIndex = 21;
             // 
-            // lbDetails
+            // lbDescription
             // 
-            lbDetails.AutoSize = true;
-            lbDetails.Location = new Point(26, 143);
-            lbDetails.Name = "lbDetails";
-            lbDetails.Size = new Size(42, 15);
-            lbDetails.TabIndex = 20;
-            lbDetails.Text = "Details";
+            lbDescription.AutoSize = true;
+            lbDescription.Location = new Point(30, 101);
+            lbDescription.Name = "lbDescription";
+            lbDescription.Size = new Size(67, 15);
+            lbDescription.TabIndex = 20;
+            lbDescription.Text = "Description";
             // 
             // tbName
             // 
@@ -170,31 +170,33 @@
             lbName.TabIndex = 18;
             lbName.Text = "Name";
             // 
-            // cmbProject
+            // btnEdit
             // 
-            cmbProject.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbProject.FormattingEnabled = true;
-            cmbProject.Location = new Point(103, 89);
-            cmbProject.Name = "cmbProject";
-            cmbProject.Size = new Size(229, 23);
-            cmbProject.TabIndex = 32;
+            btnEdit.Location = new Point(764, 326);
+            btnEdit.Name = "btnEdit";
+            btnEdit.Size = new Size(75, 23);
+            btnEdit.TabIndex = 32;
+            btnEdit.Text = "EDIT";
+            btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.Click += btnEdit_Click;
             // 
-            // lbProject
+            // btnDelete
             // 
-            lbProject.AutoSize = true;
-            lbProject.Location = new Point(30, 89);
-            lbProject.Name = "lbProject";
-            lbProject.Size = new Size(44, 15);
-            lbProject.TabIndex = 33;
-            lbProject.Text = "Project";
+            btnDelete.Location = new Point(764, 285);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(75, 23);
+            btnDelete.TabIndex = 33;
+            btnDelete.Text = "DELETE";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
-            // AddTaskForm
+            // ViewProject
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(868, 424);
-            Controls.Add(lbProject);
-            Controls.Add(cmbProject);
+            Controls.Add(btnDelete);
+            Controls.Add(btnEdit);
             Controls.Add(lbFinishDate);
             Controls.Add(lbStartDate);
             Controls.Add(dtpFinishDate);
@@ -204,15 +206,14 @@
             Controls.Add(lbPriority);
             Controls.Add(cmbPriority);
             Controls.Add(cbPrivate);
-            Controls.Add(btnSubmitTask);
-            Controls.Add(tbDetails);
-            Controls.Add(lbDetails);
+            Controls.Add(btnSubmitEdit);
+            Controls.Add(tbDescription);
+            Controls.Add(lbDescription);
             Controls.Add(tbName);
             Controls.Add(lbName);
-            Margin = new Padding(2);
-            Name = "AddTaskForm";
-            Text = "AddTaskForm";
-            Load += AddTaskForm_Load;
+            Name = "ViewProject";
+            Text = "ViewProject";
+            Load += ViewProject_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -228,12 +229,12 @@
         private Label lbPriority;
         private ComboBox cmbPriority;
         private CheckBox cbPrivate;
-        private Button btnSubmitTask;
-        private TextBox tbDetails;
-        private Label lbDetails;
+        private Button btnSubmitEdit;
+        private TextBox tbDescription;
+        private Label lbDescription;
         private TextBox tbName;
         private Label lbName;
-        private ComboBox cmbProject;
-        private Label lbProject;
+        private Button btnEdit;
+        private Button btnDelete;
     }
 }

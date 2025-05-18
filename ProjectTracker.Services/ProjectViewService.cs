@@ -67,17 +67,26 @@ namespace ProjectTracker.Services
 
         public async Task<IEnumerable<Status>> GetStatusesAsync()
         {
-            var statuses = await _statusRepo.GetAllStatusAsync();
-            
-            return statuses;
+            return await _statusRepo.GetAllStatusAsync();
         }
         public async Task<IEnumerable<Priority>> GetPrioritiesAsync()
         {
-            var priorities = await _priorityRepo.GetAllPriorityAsync();
-
-            return priorities;
+            return await _priorityRepo.GetAllPriorityAsync();
         }
 
-       
+        public async Task<Project> GetProjectByIdAsync(int id)
+        {
+            return await _projectRepo.GetProjectByIdAsync(id);
+        }
+
+        public async Task UpdateProjectAsync(Project project)
+        {
+            await _projectRepo.UpdateProjectAsync(project);
+        }
+
+        public async Task DeleteProjectAsync(int id)
+        {
+            await _projectRepo.DeleteProjectAsync(id);
+        }
     }
 }

@@ -20,13 +20,15 @@ namespace ProjectTracker.WinForms.Forms
 
         private readonly IProjectViewService _projectViewService;
         private readonly ITaskViewService _taskViewService;
+        private readonly IIdeaViewService _ideaViewService;
 
         //note maybe add a method to projectViewService to get status and priority and then only inject that rather than the repos
-        public ViewForm(IProjectViewService projectViewService, ITaskViewService taskViewService)
+        public ViewForm(IProjectViewService projectViewService, ITaskViewService taskViewService, IIdeaViewService ideaViewService)
         {
             InitializeComponent();
             _projectViewService = projectViewService;
             _taskViewService = taskViewService;
+            _ideaViewService = ideaViewService;
 
         }
 
@@ -44,6 +46,7 @@ namespace ProjectTracker.WinForms.Forms
             {
                 await ProjectsTab_Load();
                 await TasksTab_Load();
+                await IdeaTab_Load();
             }
             catch (Exception ex)
             {
@@ -77,7 +80,8 @@ namespace ProjectTracker.WinForms.Forms
 
                 dgvProjects.Columns.Add(expandButtonColumn);
                 dgvProjects.Columns.Add(viewTasksButtonColumn);
-                //dgvProjects.Columns["View/Edit"].DisplayIndex = dgvProjects.Columns.Count - 1;
+               
+                dgvProjects.ReadOnly = true;
 
 
 
@@ -125,12 +129,38 @@ namespace ProjectTracker.WinForms.Forms
             if (e.RowIndex < 0) return;
 
             if (e.ColumnIndex == dgvProjects.Columns["View Details"].Index)
-            {
-                MessageBox.Show("The EXPAND button works, add some logic to it!");
+            {             
+               
+                    int id = (int)dgvProjects.Rows[e.RowIndex].Cells["Id"].Value;
+
+                    var project = await _projectViewService.GetProjectByIdAsync(id);
+
+                    if (project != null)
+                    {
+                        var projectForm = new ViewProjectForm(_projectViewService, project);
+
+                        projectForm.ShowDialog();
+                    }
+                
             }
             else if (e.ColumnIndex == dgvProjects.Columns["View Tasks"].Index)
             {
-                MessageBox.Show("The TASKS button works, add some logic to it!");
+                var selectedRow = dgvProjects.Rows[e.RowIndex];
+
+                if (selectedRow.Cells["Id"].Value is int projectId)
+                {
+                    _taskTabSelectedProject = projectId;
+
+                    cmbStatusTask.SelectedIndex = 0;
+                    cmbPriorityTask.SelectedIndex = 0;
+                    cmbProjectTask.SelectedValue = projectId;
+
+                    tabControlViews.SelectedTab = tabTasks;
+
+                    await ReloadTasksAsync();
+                }
+
+               
             }
         }
 
@@ -224,7 +254,7 @@ namespace ProjectTracker.WinForms.Forms
 
             dgvTasks.Columns.Add(expandButtonColumn);
 
-
+            dgvTasks.ReadOnly = true;
 
 
             //set up combo boxes
@@ -265,11 +295,7 @@ namespace ProjectTracker.WinForms.Forms
 
         }
 
-        private void CmbStatusProject_SelectedIndexChanged(object? sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
+     
 
         //METHODS FOR TASK GRID
 
@@ -278,12 +304,19 @@ namespace ProjectTracker.WinForms.Forms
         private async void dgvTasks_ButtonColumnsCellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
-            
 
-          
             if (e.ColumnIndex == dgvTasks.Columns["View Details"].Index)
             {
-                MessageBox.Show("The EXPAND button works, add some logic to it!");
+                int id = (int)dgvTasks.Rows[e.RowIndex].Cells["Id"].Value;
+
+                var task = await _taskViewService.GetTaskByIdAsync(id);
+
+                if (task != null)
+                {
+                    var taskForm = new ViewTaskForm(_taskViewService, _projectViewService, task);
+
+                    taskForm.ShowDialog();
+                }
             }
         }
 
@@ -331,7 +364,7 @@ namespace ProjectTracker.WinForms.Forms
             dgvTasks.DataSource = tasks;
         }
 
-        //filtering by status/priority combo boxes
+        //filtering by combo boxes
 
         private async void cmbStatusTask_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -373,6 +406,90 @@ namespace ProjectTracker.WinForms.Forms
             }
 
             await ReloadTasksAsync();
+        }
+
+
+
+        //IDEA TAB
+        private async Task IdeaTab_Load()
+        {
+            var ideas = await _ideaViewService.GetAllIdeasAsync("Name", "ASC");
+
+            //add buttons to form
+            DataGridViewButtonColumn expandButtonColumn = new DataGridViewButtonColumn();
+            expandButtonColumn.Name = "View Details";
+            expandButtonColumn.Text = "Expand";
+            expandButtonColumn.UseColumnTextForButtonValue = true;
+
+           
+            //populate form
+
+            dgvIdeas.DataSource = ideas;
+
+            dgvIdeas.Columns["Id"].Visible = false;
+
+            dgvIdeas.Columns.Add(expandButtonColumn);
+
+            dgvIdeas.ReadOnly = true;
+         
+
+            //add methods
+            dgvIdeas.CellContentClick += dgvIdeas_ButtonColumnCellClick;
+            dgvIdeas.ColumnHeaderMouseClick += dgvIdeas_ColumnHeadMouseClick;
+
+
+        }
+
+        //IDEA VIEW METHODS
+
+        //button column click event
+        private async void dgvIdeas_ButtonColumnCellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            if (e.ColumnIndex == dgvIdeas.Columns["View Details"].Index)
+            {
+                int id = (int)dgvIdeas.Rows[e.RowIndex].Cells["Id"].Value;
+
+                var idea = await _ideaViewService.GetIdeaAsync(id);
+
+                if(idea != null)
+                {
+                    var ideaForm = new ViewIdeaForm(_ideaViewService, idea);
+                   
+                    ideaForm.ShowDialog();
+                }
+            }
+
+            //this.Close();
+        }
+
+        //column head filtering
+
+        private async void dgvIdeas_ColumnHeadMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            string clickedColumn = dgvIdeas.Columns[e.ColumnIndex].Name;
+
+            string sortableColumns = "Name";
+
+            if (!sortableColumns.Contains(clickedColumn))
+            {
+                return;
+            }
+
+            if (_currentSortColumn == clickedColumn)
+            {
+                _currentSortOrder = _currentSortOrder == "ASC" ? "DESC" : "ASC";
+            }
+            else
+            {
+                _currentSortColumn = clickedColumn;
+                _currentSortOrder = "ASC";
+            }
+
+
+            var ideas = await _ideaViewService.GetAllIdeasAsync(_currentSortColumn, _currentSortOrder);
+            dgvIdeas.DataSource = ideas;
         }
     }
 }

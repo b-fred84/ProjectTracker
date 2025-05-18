@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tabControl1 = new TabControl();
+            tabControlViews = new TabControl();
             tabProjects = new TabPage();
             panel1 = new Panel();
             cmbPriorityProject = new ComboBox();
@@ -42,7 +42,7 @@
             dgvTasks = new DataGridView();
             tabIdeas = new TabPage();
             dgvIdeas = new DataGridView();
-            tabControl1.SuspendLayout();
+            tabControlViews.SuspendLayout();
             tabProjects.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvProjects).BeginInit();
@@ -53,17 +53,17 @@
             ((System.ComponentModel.ISupportInitialize)dgvIdeas).BeginInit();
             SuspendLayout();
             // 
-            // tabControl1
+            // tabControlViews
             // 
-            tabControl1.Controls.Add(tabProjects);
-            tabControl1.Controls.Add(tabTasks);
-            tabControl1.Controls.Add(tabIdeas);
-            tabControl1.Dock = DockStyle.Fill;
-            tabControl1.Location = new Point(0, 0);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(868, 424);
-            tabControl1.TabIndex = 0;
+            tabControlViews.Controls.Add(tabProjects);
+            tabControlViews.Controls.Add(tabTasks);
+            tabControlViews.Controls.Add(tabIdeas);
+            tabControlViews.Dock = DockStyle.Fill;
+            tabControlViews.Location = new Point(0, 0);
+            tabControlViews.Name = "tabControlViews";
+            tabControlViews.SelectedIndex = 0;
+            tabControlViews.Size = new Size(868, 424);
+            tabControlViews.TabIndex = 0;
             // 
             // tabProjects
             // 
@@ -193,11 +193,11 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(868, 424);
-            Controls.Add(tabControl1);
+            Controls.Add(tabControlViews);
             Name = "ViewForm";
             Text = "ViewForm";
             Load += ViewForm_Load;
-            tabControl1.ResumeLayout(false);
+            tabControlViews.ResumeLayout(false);
             tabProjects.ResumeLayout(false);
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvProjects).EndInit();
@@ -211,7 +211,7 @@
 
         #endregion
 
-        private TabControl tabControl1;
+        private TabControl tabControlViews;
         private TabPage tabProjects;
         private TabPage tabTasks;
         private TabPage tabIdeas;

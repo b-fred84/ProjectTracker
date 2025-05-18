@@ -69,7 +69,7 @@
             tbDescription.Multiline = true;
             tbDescription.Name = "tbDescription";
             tbDescription.ScrollBars = ScrollBars.Vertical;
-            tbDescription.Size = new Size(452, 108);
+            tbDescription.Size = new Size(553, 108);
             tbDescription.TabIndex = 3;
             // 
             // tbNotes
@@ -78,7 +78,7 @@
             tbNotes.Multiline = true;
             tbNotes.Name = "tbNotes";
             tbNotes.ScrollBars = ScrollBars.Vertical;
-            tbNotes.Size = new Size(452, 108);
+            tbNotes.Size = new Size(553, 108);
             tbNotes.TabIndex = 4;
             // 
             // lbDescription

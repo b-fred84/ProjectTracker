@@ -103,7 +103,7 @@ namespace ProjectTracker.WinForms
             cmbStatus.ValueMember = "Id";
             
         }
-
+        
         public void ClearTaskForm()
         {
             tbName.Clear();

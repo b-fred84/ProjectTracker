@@ -1,4 +1,5 @@
-﻿using ProjectTracker.Core.Interfaces.Services;
+﻿using ProjectTracker.Core.Interfaces.Repos;
+using ProjectTracker.Core.Interfaces.Services;
 using ProjectTracker.Core.Models;
 using ProjectTracker.Core.ViewModels;
 using System;
@@ -11,18 +12,45 @@ namespace ProjectTracker.Services
 {
     public class IdeaViewService : IIdeaViewService
     {
-        public async Task<IEnumerable<IdeaListViewModel>> GetAllIdeasAsync()
+        private readonly IIdeaRepository _ideaRepo;
+
+        public IdeaViewService(IIdeaRepository ideaRepo)
         {
-            //var sqlQuery = "SELECT * FROM ProjectIdea";
+            _ideaRepo = ideaRepo;
+        }
+        public async Task<IEnumerable<IdeaListViewModel>> GetAllIdeasAsync(string sortBy, string sortOrder)
+        {
+            var ideas = await _ideaRepo.GetAllIdeasAsync(sortBy, sortOrder);
 
-            //return await _
+            List<IdeaListViewModel> IdeasListVM = new List<IdeaListViewModel>();
 
-                 throw new NotImplementedException();
+            foreach (var idea in ideas)
+            {
+                IdeaListViewModel IdeaVM = new IdeaListViewModel
+                {
+                    Id = idea.Id,
+                    Name = idea.Name
+                };
+                IdeasListVM.Add(IdeaVM);
+            }
+
+            return IdeasListVM;
+        
         }
 
-        public Task<ProjectIdea> GetIdeaAsync(int Id)
+        public async Task<ProjectIdea> GetIdeaAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _ideaRepo.GetIdeaByIdAsync(id); 
+        }
+
+        public async Task UpdateIdeaAsync(ProjectIdea idea)
+        {
+            await _ideaRepo.UpdateIdeaAsync(idea);
+        }
+
+        public async Task DeleteIdeaAsync(int id)
+        {
+            await _ideaRepo.DeleteIdeaAsync(id);
         }
     }
 }

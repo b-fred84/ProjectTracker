@@ -9,7 +9,7 @@ namespace ProjectTracker.Core.Interfaces.Repos
 {
     public interface IIdeaRepository
     {
-        Task<IEnumerable<ProjectIdea>> GetAllIdeasAsync();
+        Task<IEnumerable<ProjectIdea>> GetAllIdeasAsync(string sortBy, string sortOrder);
         Task<ProjectIdea> GetIdeaByIdAsync(int id);
         Task AddIdeaAsync(ProjectIdea projectIdea);
         Task UpdateIdeaAsync(ProjectIdea projectIdea);

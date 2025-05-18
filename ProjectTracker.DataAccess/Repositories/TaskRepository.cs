@@ -44,9 +44,7 @@ namespace ProjectTracker.DataAccess.Repositories
 
         public async Task<TaskModel> GetTaskByIdAsync(int id)
         {
-            var sqlQuery = "SELECT * FROM [Task] WHERE Id = @Id";
-
-            var results = await _dbAccess.LoadDataAsync<TaskModel, dynamic> (sqlQuery, new { Id = id });
+            var results = await _dbAccess.LoadDataAsync<TaskModel, dynamic> ("dbo.GetTaskById", new { Id = id });
 
             return results.FirstOrDefault();
         }
