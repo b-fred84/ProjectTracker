@@ -1,4 +1,5 @@
 ﻿using ProjectTracker.Core.Interfaces.Repos;
+using ProjectTracker.Core.Interfaces.Services;
 using ProjectTracker.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -14,21 +15,16 @@ namespace ProjectTracker.WinForms
 {
     public partial class AddTaskForm : Form
     {
-        private readonly ITaskRepository _taskRepository;
-        private readonly IPriorityRepository _priorityRepository;
-        private readonly IStatusRepository _statusRepository;
-        private readonly IProjectRepository _projectRepository;
 
-        public AddTaskForm(ITaskRepository taskRepository, 
-                           IPriorityRepository priorityRepository, 
-                           IStatusRepository statusRepository, 
-                           IProjectRepository projectRepository)
+        private readonly IProjectViewService _projectViewService;
+        private readonly ITaskViewService _taskViewService;
+
+        public AddTaskForm(IProjectViewService projectViewService, ITaskViewService taskViewService)
         {
             InitializeComponent();
-            _taskRepository = taskRepository;
-            _priorityRepository = priorityRepository;
-            _statusRepository = statusRepository;
-            _projectRepository = projectRepository;
+            _projectViewService = projectViewService;
+            _taskViewService = taskViewService;
+
         }
 
         private async void btnSubmitTask_Click(object sender, EventArgs e)
@@ -65,7 +61,7 @@ namespace ProjectTracker.WinForms
 
                 if (isValid)
                 {
-                    await _taskRepository.AddTaskAsync(task);
+                    await _taskViewService.AddTaskAsync(task);
 
                     MessageBox.Show($"Task: {task.Name} successfully added for Project: {cmbProject.Text}");
 
@@ -87,17 +83,17 @@ namespace ProjectTracker.WinForms
 
         private async void AddTaskForm_Load(object sender, EventArgs e)
         {
-            var projects = await _projectRepository.GetAllProjectsAsync();
+            var projects = await _projectViewService.GetAllProjectsAsync();
             cmbProject.DataSource = projects;
             cmbProject.DisplayMember = "Name";
             cmbProject.ValueMember = "Id";
 
-            var priorities = await _priorityRepository.GetAllPriorityAsync();
+            var priorities = await _projectViewService.GetPrioritiesAsync();
             cmbPriority.DataSource = priorities;
             cmbPriority.DisplayMember = "Name";
             cmbPriority.ValueMember = "Id";
 
-            var statusList = await _statusRepository.GetAllStatusAsync();
+            var statusList = await _projectViewService.GetStatusesAsync();
             cmbStatus.DataSource = statusList;
             cmbStatus.DisplayMember = "Name";
             cmbStatus.ValueMember = "Id";

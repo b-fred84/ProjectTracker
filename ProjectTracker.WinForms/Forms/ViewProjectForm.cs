@@ -1,16 +1,6 @@
 ﻿using ProjectTracker.Core.Interfaces.Services;
 using ProjectTracker.Core.Models;
-using ProjectTracker.Services;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using ProjectTracker.WinForms.Forms;
 
 namespace ProjectTracker.WinForms.Forms
 {
@@ -19,28 +9,40 @@ namespace ProjectTracker.WinForms.Forms
 
         private readonly IProjectViewService _projectViewService;
         private Project _project;
-        public ViewProjectForm(IProjectViewService projectViewService, Project project)
+        private ViewForm _viewForm;
+        public ViewProjectForm(IProjectViewService projectViewService, Project project, ViewForm viewForm)
         {
             InitializeComponent();
             _projectViewService = projectViewService;
             _project = project;
+            _viewForm = viewForm;
         }
 
         private async void btnDelete_Click(object sender, EventArgs e)
         {
             if (!_project.HasTasks)
             {
-                var confirm = MessageBox.Show("Are you sure you want to delete this project?", "Confirm Delete", MessageBoxButtons.YesNo);
+                var confirm = MessageBox.Show($"Are you sure you want to delete {_project.Name}?", "Confirm Delete", MessageBoxButtons.YesNo);
                 if (confirm == DialogResult.Yes)
                 {
-                    await _projectViewService.DeleteProjectAsync(_project.Id);
+                    await _projectViewService.DeleteProjectAndRelatedTasksAsync(_project.Id);
                     MessageBox.Show("Project deleted.");
+                    await _viewForm.ReloadAllTabsAsync();
                     this.Close();
                 }
             }
             else
             {
-                MessageBox.Show("Cannot delete a project that has active tasks.\n If you want to delete the project please delete tasks first");
+                var confirm  = MessageBox.Show($"Are you sure you want to delete {_project.Name} and all relating tasks?", "Confirm Delete", MessageBoxButtons.YesNo);
+                if (confirm == DialogResult.Yes)
+                {
+                    await _projectViewService.DeleteProjectAndRelatedTasksAsync(_project.Id);
+                    MessageBox.Show("Project deleted.");
+                    await _viewForm.ReloadAllTabsAsync();
+
+                    this.Close();
+                }
+             
             }
 
             

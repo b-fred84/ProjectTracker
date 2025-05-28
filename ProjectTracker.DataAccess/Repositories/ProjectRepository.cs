@@ -27,17 +27,6 @@ public class ProjectRepository : IProjectRepository
         _dbAccess = dbAccess;
     }
 
-    //public async Task AddAsync(Project project)
-    //{
-
-    //    var sqlQuery = @"INSERT INTO Project (Name, Description, StatusId, PriorityId, StartDate, FinishDate, Private)
-    //                   VALUES (@Name, @Description, @StatusId, @PriorityId, @StartDate, @FinishDate, @Private)";
-
-
-    //    await connection.ExecuteAsync(sqlQuery, project);
-    //}
-
-
 
     public async Task AddProjectAsync(Project project)
     {

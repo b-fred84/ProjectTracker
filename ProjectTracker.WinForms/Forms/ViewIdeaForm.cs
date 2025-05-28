@@ -17,13 +17,15 @@ namespace ProjectTracker.WinForms.Forms
     {
         private readonly IIdeaViewService _ideaViewService;
         private ProjectIdea _idea;
+        private ViewForm _viewForm;
         
        
-        public ViewIdeaForm(IIdeaViewService ideaViewService, ProjectIdea idea)
+        public ViewIdeaForm(IIdeaViewService ideaViewService, ProjectIdea idea, ViewForm viewForm)
         {
             InitializeComponent();
             _ideaViewService = ideaViewService; 
             _idea = idea;
+            _viewForm = viewForm;
 
             tbName.Text = idea.Name;
             tbDescription.Text = idea.Description;
@@ -42,16 +44,16 @@ namespace ProjectTracker.WinForms.Forms
         }
 
         
-        private void btnDelete_Click(object sender, EventArgs e)
+        private async void btnDelete_Click(object sender, EventArgs e)
         {
             var confirm = MessageBox.Show("Are you sure you want to delete this idea?", "Confirm Delete", MessageBoxButtons.YesNo);
             
             if(confirm == DialogResult.Yes)
             {
                 var id = _idea.Id;
-                _ideaViewService.DeleteIdeaAsync(id);
+                await _ideaViewService.DeleteIdeaAsync(id);
             }
-
+            await _viewForm.ReloadAllTabsAsync();
             this.Close();
            
         }
@@ -61,15 +63,15 @@ namespace ProjectTracker.WinForms.Forms
             SetReadOnly(false); 
         }
 
-        private void btnSubmitIdeaEdit_Click(object sender, EventArgs e)
+        private async void btnSubmitIdeaEdit_Click(object sender, EventArgs e)
         {
             _idea.Name = tbName.Text;
             _idea.Description = tbDescription.Text;
             _idea.Notes = tbNotes.Text;
-            _ideaViewService.UpdateIdeaAsync(_idea);
+            await _ideaViewService.UpdateIdeaAsync(_idea);
 
             MessageBox.Show($"{_idea.Name} Updated");
-
+            await _viewForm.ReloadAllTabsAsync();
             this.Close();
           
         }

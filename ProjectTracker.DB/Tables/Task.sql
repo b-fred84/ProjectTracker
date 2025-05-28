@@ -9,10 +9,8 @@
     [StartDate] DATE NULL, 
     [FinishDate] DATE NULL, 
     [Private] BIT NULL DEFAULT 0, 
-    CONSTRAINT [FK_Task_ToProject] FOREIGN KEY ([ProjectId]) REFERENCES [Project]([Id]), 
+    CONSTRAINT [FK_Task_ToProject] FOREIGN KEY ([ProjectId]) REFERENCES [Project]([Id]) ON DELETE CASCADE, 
     CONSTRAINT [FK_Task_Status] FOREIGN KEY ([StatusId]) REFERENCES [Status]([Id]), 
     CONSTRAINT [FK_Task_Priority] FOREIGN KEY ([PriorityId]) REFERENCES [Priority]([Id])
-  
-   
     
 )

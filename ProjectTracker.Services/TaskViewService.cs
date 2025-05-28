@@ -27,12 +27,7 @@ namespace ProjectTracker.Services
             _priorityRepo = priorityRepo;
         }
 
-
-        //public async Task<IEnumerable<TaskListViewModel>> GetAllTasksAsync()
-        //{
-
-        //}
-
+      
         public async Task<IEnumerable<TaskListViewModel>> GetAllTasksFilteredAsync(int? projectId, int? statusId, int? priorityId, string sortBy, string sortOrder)
         {
             var tasks = await _taskRepo.GetTasksFilterableAsync(projectId, statusId, priorityId, sortBy, sortOrder);
@@ -80,11 +75,17 @@ namespace ProjectTracker.Services
             await _taskRepo.DeleteTaskAsync(id);
         }
 
+        public async Task AddTaskAsync(TaskModel task)
+        {
+            await _taskRepo.AddTaskAsync(task);
+        }
 
 
-        //dont need these?  doing it from projectViewService.
-        //or is it better to reproduce then each service is doing what it needs
-        //rather than using other services,  but code gets repetastive - look at this later?
+
+        //dont need these?  doing it from projectViewService
+        //(currently have to inject project anyuway so easier to do all from projectViewService)
+        //if project grows maybe useful to add these in here too but for now not much point
+        
         public Task<IEnumerable<Priority>> GetPrioritiesAsync()
         {
             throw new NotImplementedException();
@@ -95,7 +96,6 @@ namespace ProjectTracker.Services
             throw new NotImplementedException();
         }
 
-       
     }
 }
 

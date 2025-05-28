@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.Common;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ProjectTracker.Core;
-using ProjectTracker.Core.Interfaces.Repos;
+﻿
+using ProjectTracker.Core.Interfaces.Services;
 using ProjectTracker.Core.Models;
 
 
@@ -18,15 +8,12 @@ namespace ProjectTracker.WinForms
     public partial class AddProjectForm : Form
     {
 
-        private readonly IProjectRepository _projectRepository;
-        private readonly IPriorityRepository _priorityRepository;
-        private readonly IStatusRepository _statusRepository;
-        public AddProjectForm(IProjectRepository projectRepository, IPriorityRepository priorityRepository, IStatusRepository statusRepository)
+        private readonly IProjectViewService _projectViewService;
+
+        public AddProjectForm(IProjectViewService projectViewService)
         {
             InitializeComponent();
-            _projectRepository = projectRepository;
-            _priorityRepository = priorityRepository;
-            _statusRepository = statusRepository;
+            _projectViewService = projectViewService;
         }
 
         private async void btnSubmitProject_Click(object sender, EventArgs e)
@@ -62,7 +49,7 @@ namespace ProjectTracker.WinForms
 
                 if (isValid)
                 {
-                    await _projectRepository.AddProjectAsync(project);
+                    await _projectViewService.AddProjectAsync(project);
 
                     MessageBox.Show($"Project: {project.Name} successfully added.");
 
@@ -82,7 +69,6 @@ namespace ProjectTracker.WinForms
             }
 
 
-
         }
 
         public void ClearProjectForm()
@@ -100,12 +86,12 @@ namespace ProjectTracker.WinForms
 
         private async void AddProjectForm_Load(object sender, EventArgs e)
         {
-            var priorties = await _priorityRepository.GetAllPriorityAsync();
+            var priorties = await _projectViewService.GetPrioritiesAsync();
             cmbPriority.DataSource = priorties;
             cmbPriority.DisplayMember = "Name";
             cmbPriority.ValueMember = "Id";
 
-            var statusList = await _statusRepository.GetAllStatusAsync();
+            var statusList = await _projectViewService.GetStatusesAsync();
             cmbStatus.DataSource = statusList;
             cmbStatus.DisplayMember = "Name";
             cmbStatus.ValueMember = "Id";

@@ -40,18 +40,24 @@ namespace ProjectTracker.WinForms.Forms
         private int? _taskTabSelectedPriority = null;
         private int? _taskTabSelectedProject = null;
 
-        private async void ViewForm_Load(object sender, EventArgs e)
+        public async void ViewForm_Load(object sender, EventArgs e)
         {
             try
             {
-                await ProjectsTab_Load();
-                await TasksTab_Load();
-                await IdeaTab_Load();
+                await ReloadAllTabsAsync();
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message);
             }
+        }
+
+        public async Task ReloadAllTabsAsync()
+        {
+            await ProjectsTab_Load();
+            await TasksTab_Load();
+            await IdeaTab_Load();
+
         }
 
         //PROJECT VIEW TAB
@@ -62,24 +68,32 @@ namespace ProjectTracker.WinForms.Forms
 
                 var projects = await _projectViewService.GetAllProjectsFilteredAsync(statusId: null, priorityId: null, sortBy: "Name", sortOrder: "ASC");
 
-                //add buttons to form
-                DataGridViewButtonColumn expandButtonColumn = new DataGridViewButtonColumn();
-                expandButtonColumn.Name = "View Details";
-                expandButtonColumn.Text = "Expand";
-                expandButtonColumn.UseColumnTextForButtonValue = true;
-
-                DataGridViewButtonColumn viewTasksButtonColumn = new DataGridViewButtonColumn();
-                viewTasksButtonColumn.Name = "View Tasks";
-                viewTasksButtonColumn.Text = "Tasks";
-                viewTasksButtonColumn.UseColumnTextForButtonValue = true;
+     
 
                 //populate form
                 dgvProjects.DataSource = projects;
 
                 dgvProjects.Columns["Id"].Visible = false;
 
-                dgvProjects.Columns.Add(expandButtonColumn);
-                dgvProjects.Columns.Add(viewTasksButtonColumn);
+
+                //add buttons to form
+                if (dgvProjects.Columns["View Details"] == null)
+                {
+                    DataGridViewButtonColumn expandButtonColumn = new DataGridViewButtonColumn();
+                    expandButtonColumn.Name = "View Details";
+                    expandButtonColumn.Text = "Expand";
+                    expandButtonColumn.UseColumnTextForButtonValue = true;
+                    dgvProjects.Columns.Add(expandButtonColumn);
+                }
+                if (dgvProjects.Columns["View Tasks"] == null)
+                {
+                    DataGridViewButtonColumn viewTasksButtonColumn = new DataGridViewButtonColumn();
+                    viewTasksButtonColumn.Name = "View Tasks";
+                    viewTasksButtonColumn.Text = "Tasks";
+                    viewTasksButtonColumn.UseColumnTextForButtonValue = true;
+                    dgvProjects.Columns.Add(viewTasksButtonColumn);
+                }
+                
                
                 dgvProjects.ReadOnly = true;
 
@@ -137,7 +151,7 @@ namespace ProjectTracker.WinForms.Forms
 
                     if (project != null)
                     {
-                        var projectForm = new ViewProjectForm(_projectViewService, project);
+                        var projectForm = new ViewProjectForm(_projectViewService, project, this);
 
                         projectForm.ShowDialog();
                     }
@@ -241,18 +255,23 @@ namespace ProjectTracker.WinForms.Forms
         {
             var tasks = await _taskViewService.GetAllTasksFilteredAsync(null, null, null, "Name", "ASC");
 
-            //add buttons to form
-            DataGridViewButtonColumn expandButtonColumn = new DataGridViewButtonColumn();
-            expandButtonColumn.Name = "View Details";
-            expandButtonColumn.Text = "Expand";
-            expandButtonColumn.UseColumnTextForButtonValue = true;
 
             //populate form
             dgvTasks.DataSource = tasks;
 
             dgvTasks.Columns["Id"].Visible = false;
 
-            dgvTasks.Columns.Add(expandButtonColumn);
+
+            //add buttons to form
+            if (dgvTasks.Columns["View Details"] == null)
+            {
+                DataGridViewButtonColumn expandButtonColumn = new DataGridViewButtonColumn();
+                expandButtonColumn.Name = "View Details";
+                expandButtonColumn.Text = "Expand";
+                expandButtonColumn.UseColumnTextForButtonValue = true;
+                dgvTasks.Columns.Add(expandButtonColumn);
+
+            }
 
             dgvTasks.ReadOnly = true;
 
@@ -313,7 +332,7 @@ namespace ProjectTracker.WinForms.Forms
 
                 if (task != null)
                 {
-                    var taskForm = new ViewTaskForm(_taskViewService, _projectViewService, task);
+                    var taskForm = new ViewTaskForm(_taskViewService, _projectViewService, task, this);
 
                     taskForm.ShowDialog();
                 }
@@ -415,11 +434,8 @@ namespace ProjectTracker.WinForms.Forms
         {
             var ideas = await _ideaViewService.GetAllIdeasAsync("Name", "ASC");
 
-            //add buttons to form
-            DataGridViewButtonColumn expandButtonColumn = new DataGridViewButtonColumn();
-            expandButtonColumn.Name = "View Details";
-            expandButtonColumn.Text = "Expand";
-            expandButtonColumn.UseColumnTextForButtonValue = true;
+           
+           
 
            
             //populate form
@@ -428,7 +444,17 @@ namespace ProjectTracker.WinForms.Forms
 
             dgvIdeas.Columns["Id"].Visible = false;
 
-            dgvIdeas.Columns.Add(expandButtonColumn);
+
+            //add buttons to form
+            if (dgvIdeas.Columns["View Details"] == null)
+            {
+                DataGridViewButtonColumn expandButtonColumn = new DataGridViewButtonColumn();
+                expandButtonColumn.Name = "View Details";
+                expandButtonColumn.Text = "Expand";
+                expandButtonColumn.UseColumnTextForButtonValue = true;
+                dgvIdeas.Columns.Add(expandButtonColumn);
+            }
+            
 
             dgvIdeas.ReadOnly = true;
          
@@ -455,7 +481,7 @@ namespace ProjectTracker.WinForms.Forms
 
                 if(idea != null)
                 {
-                    var ideaForm = new ViewIdeaForm(_ideaViewService, idea);
+                    var ideaForm = new ViewIdeaForm(_ideaViewService, idea, this);
                    
                     ideaForm.ShowDialog();
                 }

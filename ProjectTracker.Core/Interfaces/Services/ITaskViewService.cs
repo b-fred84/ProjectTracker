@@ -14,6 +14,8 @@ namespace ProjectTracker.Core.Interfaces.Services
         Task<TaskModel> GetTaskByIdAsync(int id);
         Task<IEnumerable<Status>> GetStatusesAsync();
         Task<IEnumerable<Priority>> GetPrioritiesAsync();
+
+        Task AddTaskAsync (TaskModel task);
         Task UpdateTaskAsync(TaskModel task);
         Task DeleteTaskAsync(int id);
 

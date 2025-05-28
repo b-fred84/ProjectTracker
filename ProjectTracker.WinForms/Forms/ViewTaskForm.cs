@@ -19,12 +19,14 @@ namespace ProjectTracker.WinForms.Forms
         private readonly ITaskViewService _taskViewService;
         private readonly IProjectViewService _projectViewService;
         private TaskModel _task;
-        public ViewTaskForm(ITaskViewService taskViewService, IProjectViewService projectViewService, TaskModel task)
+        private ViewForm _viewForm;
+        public ViewTaskForm(ITaskViewService taskViewService, IProjectViewService projectViewService, TaskModel task, ViewForm viewForm)
         {
             InitializeComponent();
             _taskViewService = taskViewService;
             _projectViewService = projectViewService;
             _task = task;    
+            _viewForm = viewForm;
         }
 
         private void SetReadOnly(bool isReadOnly)
@@ -41,15 +43,15 @@ namespace ProjectTracker.WinForms.Forms
 
        
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private async  void btnDelete_Click(object sender, EventArgs e)
         {
             var confirm = MessageBox.Show("Are you sure you want to delete this task?", "Confirm Delete", MessageBoxButtons.YesNo);
             
             if (confirm == DialogResult.Yes)
             {
-                _taskViewService.DeleteTaskAsync(_task.Id);
+                await _taskViewService.DeleteTaskAsync(_task.Id);
             }
-
+            await _viewForm.ReloadAllTabsAsync();
             this.Close();
         }
 
@@ -58,7 +60,7 @@ namespace ProjectTracker.WinForms.Forms
             SetReadOnly(false);
         }
 
-        private void btnSubmitEdit_Click(object sender, EventArgs e)
+        private async void btnSubmitEdit_Click(object sender, EventArgs e)
         {
             _task.Name = tbName.Text;
             _task.Details = tbDetails.Text;
@@ -68,10 +70,10 @@ namespace ProjectTracker.WinForms.Forms
             _task.StartDate = dtpStartDate.Checked ? dtpStartDate.Value.Date : (DateTime?)null;
             _task.FinishDate = dtpFinishDate.Checked ? dtpFinishDate.Value.Date : (DateTime?)null;
             _task.Private = cbPrivate.Checked;
-            _taskViewService.UpdateTaskAsync(_task);
+            await _taskViewService.UpdateTaskAsync(_task);
 
             MessageBox.Show($"{_task.Name} Updated");
-
+            await _viewForm.ReloadAllTabsAsync();
             this.Close();
         }
 

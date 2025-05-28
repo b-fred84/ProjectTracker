@@ -52,5 +52,10 @@ namespace ProjectTracker.Services
         {
             await _ideaRepo.DeleteIdeaAsync(id);
         }
+
+        public async Task AddIdeaAsync(ProjectIdea idea)
+        {
+            await _ideaRepo.AddIdeaAsync(idea);
+        }
     }
 }

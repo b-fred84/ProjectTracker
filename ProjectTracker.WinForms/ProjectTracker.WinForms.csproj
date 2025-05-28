@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProjectTracker.Core\ProjectTracker.Core.csproj" />
-    <ProjectReference Include="..\ProjectTracker.DataAccess\ProjectTracker.DataAccess.csproj" />
     <ProjectReference Include="..\ProjectTracker.Services\ProjectTracker.Services.csproj" />
   </ItemGroup>
 

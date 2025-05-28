@@ -1,4 +1,5 @@
 ﻿using ProjectTracker.Core.Interfaces.Repos;
+using ProjectTracker.Core.Interfaces.Services;
 using ProjectTracker.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,12 @@ namespace ProjectTracker.WinForms
 {
     public partial class AddProjectIdeaForm : Form
     {
-        private readonly IIdeaRepository _projectIdeaRepository;
+        private readonly IIdeaViewService _ideaViewService;
 
-        public AddProjectIdeaForm(IIdeaRepository projectIdeaRepository)
+        public AddProjectIdeaForm(IIdeaViewService ideaViewService)
         {
             InitializeComponent();
-            _projectIdeaRepository = projectIdeaRepository;
+            _ideaViewService = ideaViewService;
         }
 
         
@@ -47,7 +48,7 @@ namespace ProjectTracker.WinForms
 
                 if (isValid)
                 {
-                    await _projectIdeaRepository.AddIdeaAsync(projectIdea);
+                    await _ideaViewService.AddIdeaAsync(projectIdea);
 
                     MessageBox.Show($"Project Idea: {projectIdea.Name} was successfully addeed.");
 

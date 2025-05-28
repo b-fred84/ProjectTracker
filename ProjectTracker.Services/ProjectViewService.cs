@@ -84,9 +84,14 @@ namespace ProjectTracker.Services
             await _projectRepo.UpdateProjectAsync(project);
         }
 
-        public async Task DeleteProjectAsync(int id)
+        public async Task DeleteProjectAndRelatedTasksAsync(int id)
         {
             await _projectRepo.DeleteProjectAsync(id);
+        }
+
+        public async Task AddProjectAsync(Project project)
+        {
+            await _projectRepo.AddProjectAsync(project);
         }
     }
 }
