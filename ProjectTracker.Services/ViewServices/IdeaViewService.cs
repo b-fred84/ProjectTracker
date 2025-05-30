@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectTracker.Services
+namespace ProjectTracker.Services.ViewServices
 {
     public class IdeaViewService : IIdeaViewService
     {
@@ -35,12 +35,12 @@ namespace ProjectTracker.Services
             }
 
             return IdeasListVM;
-        
+
         }
 
         public async Task<ProjectIdea> GetIdeaAsync(int id)
         {
-            return await _ideaRepo.GetIdeaByIdAsync(id); 
+            return await _ideaRepo.GetIdeaByIdAsync(id);
         }
 
         public async Task UpdateIdeaAsync(ProjectIdea idea)

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectTracker.Services
+namespace ProjectTracker.Services.ViewServices
 {
     public class ProjectViewService : IProjectViewService
     {
@@ -34,7 +34,7 @@ namespace ProjectTracker.Services
             return projects;
         }
 
-            
+
 
         public async Task<IEnumerable<ProjectListViewModel>> GetAllProjectsFilteredAsync(int? statusId, int? priorityId, string sortBy, string sortOrder)
         {

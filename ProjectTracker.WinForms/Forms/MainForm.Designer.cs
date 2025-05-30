@@ -32,6 +32,8 @@
             btnAddTask = new Button();
             btnAddIdea = new Button();
             btnView = new Button();
+            btnExport = new Button();
+            btnExportAll = new Button();
             SuspendLayout();
             // 
             // btnAddProject
@@ -78,11 +80,35 @@
             btnView.UseVisualStyleBackColor = true;
             btnView.Click += btnView_Click;
             // 
+            // btnExport
+            // 
+            btnExport.Location = new Point(363, 247);
+            btnExport.Margin = new Padding(2);
+            btnExport.Name = "btnExport";
+            btnExport.Size = new Size(160, 58);
+            btnExport.TabIndex = 4;
+            btnExport.Text = "Save Projects and Tasks to File";
+            btnExport.UseVisualStyleBackColor = true;
+            btnExport.Click += btnExport_Click;
+            // 
+            // btnExportAll
+            // 
+            btnExportAll.Location = new Point(605, 247);
+            btnExportAll.Margin = new Padding(2);
+            btnExportAll.Name = "btnExportAll";
+            btnExportAll.Size = new Size(160, 58);
+            btnExportAll.TabIndex = 5;
+            btnExportAll.Text = "Save ALL to File";
+            btnExportAll.UseVisualStyleBackColor = true;
+            btnExportAll.Click += btnExportAll_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(868, 424);
+            Controls.Add(btnExportAll);
+            Controls.Add(btnExport);
             Controls.Add(btnView);
             Controls.Add(btnAddIdea);
             Controls.Add(btnAddTask);
@@ -99,5 +125,7 @@
         private Button btnAddTask;
         private Button btnAddIdea;
         private Button btnView;
+        private Button btnExport;
+        private Button btnExportAll;
     }
 }

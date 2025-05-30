@@ -9,7 +9,8 @@ using ProjectTracker.WinForms.Forms;
 using ProjectTracker.Core.Interfaces.Repos;
 using ProjectTracker.Core.Interfaces.Data;
 using ProjectTracker.Core.Interfaces.Services;
-using ProjectTracker.Services;
+using ProjectTracker.Services.ViewServices;
+using ProjectTracker.Services.ExportServices;
 
 namespace ProjectTracker.WinForms
 {
@@ -55,6 +56,7 @@ namespace ProjectTracker.WinForms
                     .AddScoped<IProjectViewService, ProjectViewService>()
                     .AddScoped<ITaskViewService, TaskViewService>()
                     .AddScoped<IIdeaViewService, IdeaViewService>()
+                    .AddScoped<IExportService, ExportService>()
 
                     .AddScoped<AddProjectForm>()
                     .AddScoped<AddTaskForm>()

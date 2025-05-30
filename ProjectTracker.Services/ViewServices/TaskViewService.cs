@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectTracker.Services
+namespace ProjectTracker.Services.ViewServices
 {
     public class TaskViewService : ITaskViewService
     {
@@ -27,7 +27,7 @@ namespace ProjectTracker.Services
             _priorityRepo = priorityRepo;
         }
 
-      
+
         public async Task<IEnumerable<TaskListViewModel>> GetAllTasksFilteredAsync(int? projectId, int? statusId, int? priorityId, string sortBy, string sortOrder)
         {
             var tasks = await _taskRepo.GetTasksFilterableAsync(projectId, statusId, priorityId, sortBy, sortOrder);
@@ -85,7 +85,7 @@ namespace ProjectTracker.Services
         //dont need these?  doing it from projectViewService
         //(currently have to inject project anyuway so easier to do all from projectViewService)
         //if project grows maybe useful to add these in here too but for now not much point
-        
+
         public Task<IEnumerable<Priority>> GetPrioritiesAsync()
         {
             throw new NotImplementedException();
@@ -103,4 +103,3 @@ namespace ProjectTracker.Services
 
 
 
-    

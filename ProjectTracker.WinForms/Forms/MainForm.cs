@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using ProjectTracker.Core.Interfaces.Services;
 using ProjectTracker.WinForms.Forms;
 
 namespace ProjectTracker.WinForms
@@ -8,10 +9,12 @@ namespace ProjectTracker.WinForms
 
 
         private readonly IServiceProvider _serviceProvider;
-        public MainForm(IServiceProvider serviceProvider)
+        private readonly IExportService _exportService;
+        public MainForm(IServiceProvider serviceProvider, IExportService exportService)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
+            _exportService = exportService;
         }
 
         private void btnAddProject_Click(object sender, EventArgs e)
@@ -38,8 +41,55 @@ namespace ProjectTracker.WinForms
         private void btnView_Click(object sender, EventArgs e)
         {
             ViewForm viewForm = _serviceProvider.GetRequiredService<ViewForm>();
-            
+
             viewForm.ShowDialog();
+        }
+
+        private async void btnExport_Click(object sender, EventArgs e)
+        {
+            using SaveFileDialog saveFileDialog = new SaveFileDialog()
+            {
+                Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*",
+                FileName = "ProjectExport.txt",
+                Title = "Save Export File"
+            };
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    await _exportService.ExportProjectsWithTasksToFileAsync(saveFileDialog.FileName);
+                    MessageBox.Show("Export successful");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Export failed: {ex.Message}");
+                }
+            }
+        }
+
+        private async void btnExportAll_Click(object sender, EventArgs e)
+        {
+            using SaveFileDialog saveFileDialog = new SaveFileDialog()
+            {
+                Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*",
+                FileName = "AllProjectExport.txt",
+                Title = "Save Export File"
+            };
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    await _exportService.ExportAllToFileAsync(saveFileDialog.FileName);
+                    MessageBox.Show("Export successful");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Export failed: {ex.Message}");
+                }
+            }
+
         }
     }
 }
